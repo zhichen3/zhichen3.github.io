@@ -1,0 +1,217 @@
+%------------------------
+% Resume Template
+% Author : Anubhav Singh
+% Github : https://github.com/xprilion
+% License : MIT
+%------------------------
+
+\documentclass[a4paper,20pt]{article}
+
+\usepackage{latexsym}
+%% \usepackage[empty]{fullpage}
+\usepackage{titlesec}
+\usepackage{marvosym}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{verbatim}
+\usepackage{enumitem}
+\usepackage[pdftex]{hyperref}
+\usepackage{fancyhdr}
+
+\pagestyle{fancy}
+\fancyhf{} % clear all header and footer fields
+\fancyfoot{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+
+% Adjust margins
+\addtolength{\oddsidemargin}{-0.530in}
+\addtolength{\evensidemargin}{-0.375in}
+\addtolength{\textwidth}{1in}
+\addtolength{\topmargin}{-.45in}
+\addtolength{\textheight}{1in}
+
+\urlstyle{rm}
+
+\raggedbottom
+\raggedright
+\setlength{\tabcolsep}{0in}
+
+% Sections formatting
+\titleformat{\section}{
+  \vspace{-10pt}\scshape\raggedright\large
+}{}{0em}{}[\color{black}\titlerule \vspace{-6pt}]
+
+%-------------------------
+% Custom commands
+\newcommand{\resumeItem}[2]{
+  \item\small{
+    \textrm{#1}{: #2 \vspace{-2pt}}
+  }
+}
+
+\newcommand{\resumeItemWithoutTitle}[1]{
+  \item\small{
+    {\vspace{-2pt}}
+  }
+}
+
+\newcommand{\resumeSubheading}[4]{
+  \vspace{-1pt}\item
+    \begin{tabular*}{0.97\textwidth}{l@{\extracolsep{\fill}}r}
+      \textbf{#1} & #2 \\
+      \textit{#3} & \textit{#4} \\
+    \end{tabular*}\vspace{-5pt}
+}
+
+
+\newcommand{\resumeSubItem}[2]{\resumeItem{#1}{#2}\vspace{-3pt}}
+
+\renewcommand{\labelitemii}{$\circ$}
+
+\newcommand{\resumeSubHeadingListStart}{\begin{itemize}[leftmargin=*]}
+\newcommand{\resumeSubHeadingListEnd}{\end{itemize}}
+\newcommand{\resumeItemListStart}{\begin{itemize}}
+\newcommand{\resumeItemListEnd}{\end{itemize}\vspace{-5pt}}
+
+%-----------------------------
+%%%%%%  CV STARTS HERE  %%%%%%
+
+\begin{document}
+
+%----------HEADING-----------------
+\begin{tabular*}{\textwidth}{l@{\extracolsep{\fill}}r}
+  \textbf{{\LARGE Zhi Chen}} & Email: \href{mailto:zhi.chen.3@stonybrook.edu}{zhi.chen.3@stonybrook.edu}\\
+  \href{https://github.com/zhichen3}{Github: ~~github.com/zhichen3}  & ORCID:~~~0000-0002-2839-107X \\
+% -----Personal-Website-----------
+  %\href{https://zhichen3.github.io/}{Website: zhichen3.github.io/} \\
+%---------------------------------
+\end{tabular*}
+
+%-----------EDUCATION-----------------
+\section{~~Education}
+    \resumeSubHeadingListStart
+        \resumeSubheading
+            {Stony Brook University}{Stony Brook, NY}
+            {Doctor of Philosophy - Physics;}{Aug 2023 - Present}
+        \resumeSubheading
+            {Stony Brook University}{Stony Brook, NY}
+            {Master of Arts - Physics; GPA: 3.94/4.00}{Aug 2021 - May 2023}
+            %{\scriptsize \textit{ \footnotesize{\newline{}\textbf{Courses:} Stars \& Radiation, Cosmology, Galaxies, Classical Mechanics, Quantum Mechanics I, Computational Methods}}}
+        \resumeSubheading
+            {Stony Brook University}{Stony Brook, NY}
+            {Bachelor of Science - Physics;  GPA: 3.96/4.00; Summa Cum Laude}{Aug 2017 - May 2021}
+            %{\scriptsize \textit{ \footnotesize{\newline{}\textbf{Courses:} Stars \& Radiation, Cosmology, Galaxies, General Relativity, Classical Mechanics, E\&M, Statistical Mechanics, Quantum Mechanics}}}
+  \resumeSubHeadingListEnd
+	    
+\vspace{-5pt}
+
+\section{Research Experience}
+  \resumeSubHeadingListStart
+    \resumeSubheading
+        {PhD Thesis Research/ Research Assistant}{}
+        {Graduate Student Research}{Aug 2023 - Present}
+        
+\vspace{-2pt}
+
+    \resumeSubheading
+        {Master Thesis Research / Research Assistant}{}
+        {Graduate Student Research}{Jan 2022 - Aug 2023}
+		\resumeItemListStart
+            \resumeItem{Primary Project Description}
+            {Investigated how different reaction networks, screening methods, and integration methods affect thermonuclear flame propagation for X-Ray Bursts using \href{https://github.com/AMReX-Astro/Castro}{\emph{Castro}}, an adaptive mesh, astrophysical radiation hydrodynamics simulation code.}
+            \resumeItem{Astronomy Software Development}{Worked collaboratively in a team to develop astronomy software called \href{https://github.com/python-hydro/pyro2}{\emph{pyro2}}, \href{https://github.com/pynucastro/pynucastro}{\emph{Pynucastro}}, \href{https://github.com/AMReX-Astro/Microphysics}{\emph{Microphysics}}, and \href{https://github.com/AMReX-Astro/Castro}{\emph{Castro}}.}
+            %The former is a Python library for interactively creating and exploring nuclear reaction networks, and the latter contains astrophysical microphysics routines for stellar explosions using C++.}
+		\resumeItemListEnd		
+\vspace{-2pt}
+
+
+    \resumeSubheading
+        {SULI Program at Brookhaven National Lab + Continued Research}{}%{Remote}
+        {Summer Internship + Student Research}{Jun 2021 - June 2022}
+		\resumeItemListStart
+            \resumeItem{General Setting}
+            {Worked in a small group developing a technique called two-photon interferometry, which has the potential of measuring the relative separation of two luminous objects with high precision.}
+            \resumeItem{Data Analysis using Python}
+            {Analyzed laboratory data by making and fitting various plots using Python.}
+            \resumeItem{Two-Photon Interferometry Simulation using Python}{Developed a \href{https://github.com/zhichen3/QA-sim}{\emph{simulation code}} that simulated the theoretical observational signal through two-photon interferometry given a set of telescopes and star pairs using Python.}
+            \resumeItem{Additional Features: Data Sampling and MCMC}{Added features such as data sampling and Markov Chain Monte Carlo algorithm to predict the precision of the relative separation between the star pair.}
+            % \resumeItem{Poster Conference}{Joined a poster conference by the end of the program to share research results over the summer.}
+		\resumeItemListEnd
+\vspace{-2pt}
+
+    \resumeSubheading
+        {SULI Program at Brookhaven National Lab}{}%{Remote}
+        {Summer Internship}{Jun 2020 - Aug 2020}
+        \resumeItemListStart
+            \resumeItem{General Setting}
+            {Worked in an Astro-group for building a radio-telescope to detect 21-cm emission from hydrogen}
+            \resumeItem{Primary Role}{Developed additional features for \href{https://github.com/radiohep/imcurio} {\emph{imcurio}}, which is a simulation code for 21 cm intensity mapping observations that simulates a fixed set of visibilities for a fixed telescope and fixed sky using Python.}
+            % \resumeItem{Poster Conference}{Joined a poster conference by the end of the program to share research results over the summer.}
+        \resumeItemListEnd
+		
+    \resumeSubHeadingListEnd    
+\vspace{-2pt}
+
+
+
+
+\begin{comment}
+%-----------PROJECTS-----------------
+\section{Computational Projects}
+\resumeSubHeadingListStart
+\resumeSubItem{Vison - multimedia search engine (NLP, Search Engine, Web Crawlers, Multimedia Processing)}{(Work in progress) Research oriented, open source, search engine for bringing reverse multimedia search to small \& mid scale enterprises. Tech: Python, NodeJS, Intel OpenVino Toolkit, Selenium, TensorFlow (October '18)}
+\vspace{2pt}
+\resumeSubHeadingListEnd
+\vspace{-5pt}
+\end{comment}
+
+
+
+%-----------Publications------------------
+\section{Publications}
+\resumeSubHeadingListStart
+
+\resumeSubItem{\textbf{Chen, Z.}, Zingale, M., \& Eiden, K. (2023)}{\it Sensitivity of He Flames in X-Ray Bursts to Nuclear Physics. doi: 10.3847/1538-4357/acec72}
+
+\resumeSubItem{Clark, A., Johnson, E., \textbf{Chen, Z.}, Eiden, K., Willcox, D., Boyd, B., Cao, L., DeGrendele, C., \& Zingale, M.. (2023).}{\it pynucastro: A Python Library for Nuclear Astrophysics. doi: 10.3847/1538-4357/acbaff}
+\vspace{2pt}
+
+\resumeSubItem{\textbf{Chen, Z.}, Nomerotski, A., Slosar, A., Stankus, P., \& Vintskevich, S.. (2022)}{\it Astrometry in two-photon interferometry using Earth rotation fringe scan. doi: 10.1103/PhysRevD.107.023015}
+
+\vspace{2pt}
+\resumeSubItem{Keach, M., Bellavia, S., \textbf{Chen, Z.}, Crawford, J., Dolzhenko, D., Figueroa, E., … Vintskevich, S. (2022).}{\it Increasing baselines and precision of optical interferometers using two-photon interference. A. Mérand, S. Sallum, \& J. Sanchez-Bermudez, Optical and Infrared Interferometry and Imaging VIII. doi:10.1117/12.2632122}
+\resumeSubHeadingListEnd
+\vspace{-5pt}
+
+
+%-----------Awards-----------------
+\section{Conferences and Meetings}
+\resumeSubHeadingListStart
+\resumeSubItem{Poster Presentation at Astronum Meeting, 2023}{\it Sensitivity of He Flames in X-ray Bursts to Nuclear Physics}
+\resumeSubItem{Contributed Talk at the main CeNAM Frontiers in Nuclear Astrophysics Meeting, 2023}{{\it Sensitivity of He Flames in X-ray Bursts to Nuclear Physics}}
+\resumeSubItem{SULI Internship Presentation at Brookhaven National Laboratory, Summer 2021}{\it Two-Photon Interferometry Simulations}
+\resumeSubItem{SULI Internship Presentation at Brookhaven National Laboratory, Summer 2020}{\it Hydrogen Intensity Mapping Simulator: interpolation improvements and radio point source compatibility with application to GaLactic and Extragalactic All-Sky MWA Survey (GLEAM) dataset}
+
+\resumeSubHeadingListEnd
+
+\section{Honors, Grants, Awards, and Achievements}
+\begin{description}[font=$\bullet$]
+\item {Di-Tian Prize (2023): Awarded for excellent research and travel funding.}
+\item {Stony Brook University, Academic Dean's List, 2017-2021}
+\item {NYS School Academic Excellence Scholarship}
+\vspace{-5pt}
+\end{description}
+
+\vspace{-5pt}
+
+\section{Skills Summary}
+\resumeSubHeadingListStart
+	\resumeSubItem{Languages}{~~~~~~Python, C++, Bash}
+	\resumeSubItem{Tools}{~~~~~~~~~~~~~~GIT, Latex, Sphinx, Doxygen, yt}
+	\resumeSubItem{Platforms}{~~~~~~~Linux, Web, Windows}
+
+\resumeSubHeadingListEnd
+
+\vspace{-5pt}
+
+\end{document}
