@@ -1,0 +1,16 @@
+#+hugo_base_dir: /home/zhi/Github/zhichen3.github.io/
+
+* Blog Posts
+** DONE My First Hugo Post
+   :PROPERTIES:
+   :EXPORT_FILE_NAME: my-first-hugo-post
+   :EXPORT_HUGO_SECTION: blog
+   :EXPORT_DATE: Ctrl-c .
+   :EXPORT_HUGO_PUBLISHDATE: YEAR-MONTH-DAYS or use C-c C-s
+   :EXPORT_HUGO_EXPIRYDATE: YEAR-MONTH-DAYS
+   :EXPORT_AUTHOR: Your Name
+   :EXPORT_HUGO_WEIGHT: auto
+   :EXPORT_TAGS: tag1, tag2
+   :EXPORT_CATEGORIES: category1
+   :END:
+   This is my first post exported from Org mode to Hugo!

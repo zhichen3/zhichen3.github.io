@@ -2,4 +2,10 @@
 *.aux
 *.log
 *.out
-cv.pdf
+public/
+resources/
+node_modules/
+.hugo_cache/
+.hugo_build.lock
+.DS_Store
+ltximg/

@@ -1,0 +1,15 @@
+#+hugo_base_dir: ~/path-to-hugo-site/
+#+hugo_section: blog
+#+title: My First Hugo Post
+#+date: Ctrl-C .
+#+author: Your Name
+#+hugo_publishdate: publish date
+#+hugo_expirydate: expire date
+#+hugo_draft: true
+#+hugo_weight: 123
+#+tags: tag1, tag2
+#+categories: category1
+
+
+* Introduction
+  This is my first post exported from Org mode to Hugo!

@@ -1,0 +1,51 @@
+#+hugo_base_dir: ../
+
+* Blog Posts
+** DONE My First Hugo Post                                 :hydrodynamics:@tutorial:
+:PROPERTIES:
+:EXPORT_FILE_NAME: my-first-hugo-post
+:EXPORT_HUGO_SECTION: posts
+:EXPORT_DATE: <2025-01-29 Wed>
+:EXPORT_HUGO_PUBLISHDATE:
+:EXPORT_HUGO_EXPIRYDATE:
+:EXPORT_AUTHOR: zhi
+:EXPORT_HUGO_WEIGHT: auto
+:END:
+
+This is my org posts...
+
+Here is some equations:
+
+$$ E = mc^2 $$
+
+Here is a hyperlink:
+[[https://www.wikipedia.org/][wiki]]
+
+Here is some image
+
+#+ATTR_HTML: :width 100%
+#+CAPTION: this is arizona pictures
+[[../content/photos/arizona-us/arizona-us.jpg]]
+
+I can also link image from other website.
+
+#+ATTR_HTML: :width 100%
+#+CAPTION: this is image from wikipedia
+[[https://user-images.githubusercontent.com/21258296/114303440-bfc0ae80-9aeb-11eb-8cfa-48a4bb385a6d.png]]
+
+*** This is a heading
+I have other stuff here
+
+I can have *bold text*, /italic text/, +crossout text+, and ~highlight text~.
+** DONE My Second Hugo Post :xrb:@xrb_flame:
+:PROPERTIES:
+:EXPORT_FILE_NAME: my-second-hugo-post
+:EXPORT_HUGO_SECTION: posts
+:EXPORT_DATE: <2025-01-29 Wed>
+:EXPORT_HUGO_PUBLISHDATE:
+:EXPORT_HUGO_EXPIRYDATE:
+:EXPORT_AUTHOR: zhi
+:EXPORT_HUGO_WEIGHT: auto
+:END:
+
+My post 2..

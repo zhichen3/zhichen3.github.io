@@ -1,0 +1,133 @@
+#+hugo_base_dir: ../
+#+OPTIONS: ^:nil
+
+* Research
+** DONE X-ray bursts
+:PROPERTIES:
+:EXPORT_FILE_NAME: index.md
+:EXPORT_HUGO_SECTION: research/x-ray-burst
+:EXPORT_DATE: <2025-02-02 Sun>
+:EXPORT_HUGO_PUBLISHDATE:
+:EXPORT_HUGO_EXPIRYDATE:
+:EXPORT_HUGO_CUSTOM_FRONT_MATTER: :image "network_abar_50ms.png"
+:EXPORT_AUTHOR: zhi
+:EXPORT_HUGO_WEIGHT: auto
+:EXPORT_HUGO_TYPE: gallery
+:END:
+
+I'm interested in exploring the flame dynamics and nucleosynthesis of Type I X-ray bursts
+through numerical modeling. Below are my past and ongoing projects related to X-ray bursts:
+
+*** The effect of Coriolis Force Variations on Flame Dynamics on X-ray Bursts (Ongoing)
+*** Sensitivity of He Flames in X-ray Bursts to Nuclear Physics (2023)
+
+#+attr_html: :width 700 :height 600 :controls t
+#+begin_video
+<source src="/videos/output.mp4" type="video/mp4">
+Your browser does not support the video tag.
+#+end_video
+
+video only works in static folder
+
+** DONE Interferometry
+:PROPERTIES:
+:EXPORT_FILE_NAME: index.md
+:EXPORT_HUGO_SECTION: research/interferometry
+:EXPORT_DATE: <2025-02-02 Sun>
+:EXPORT_HUGO_PUBLISHDATE:
+:EXPORT_HUGO_EXPIRYDATE:
+:EXPORT_HUGO_CUSTOM_FRONT_MATTER: :image "interferometry_setup.png"
+:EXPORT_AUTHOR: zhi
+:EXPORT_HUGO_TYPE: gallery
+:EXPORT_TAGS:
+:EXPORT_CATEGORIES:
+:END:
+
+This was my research project during my [[https://science.osti.gov/wdts/suli][SULI]] internship in 2021.
+I was interested in estimating the precision of the
+[[https://astro.theoj.org/article/39641-two-photon-amplitude-interferometry-for-precision-astrometry][two-photon interferometry]] technique
+for measuring the relative separation between two light-sources (i.e. stars)
+using Markov-Chain Monte Carlos (MCMC) simulation.
+
+*** Two-photon Interferometer Overview
+
+Assume there are two sources which can be observed simultaneously from two stations,
+*L*  and *R* , with single spatial mode inputs /a/, /b/  and /e/, /f/.
+Both sources send out photons in the form of plane wave, the path length difference
+between the two stations yielding phase delays $\delta_1$ and $\delta_2$ between the photons observed
+at channels /a/, /e/ from source 1 and /b/, /f/ from source 2, respectively.
+If the two detected photons are close enough in frequency and arrival time,
+then the pattern of coincidences measured at the outputs /c/, /d/ and /g/, /h/
+will be sensitive to the difference in phase delays
+after interference at the symmetric beam splitter in each station.
+
+$$ \Delta\delta = \delta_{1} - \delta_{2} = \frac{2\pi}{\lambda} \vec{B} \cdot (\hat{s_1} - \hat{s_2}) + \psi $$
+
+where $\vec{B}$ is the baseline of the two detectors and \psi is a constant phase-shift
+due to instrumental path length difference between the two telescope.
+And here \Delta\delta encodes the relative separation between the two sources.
+
+*** Procedure of Bayesian Analysis.
+
+The analysis involves two parts:
+
+1. Simulate coincidences following Poisson process
+2. Feed the sampled data to MCMC and see if we can recover the original parameters used
+   such as visibility and the separation between two sources.
+
+****  Simulating Coincidence
+
+#+attr_html: :width 75%
+#+caption: Schematic picture the fringe pattern. The blue curve represents a theoretical fringe pattern, and orange points are events detected.
+[[../content/research/interferometry/simulated_coincidences.jpeg]]
+
+Summary:
+1. Since fringes will vary in frequency as Earth rotates, we first determine the period
+   of each fringe cycle denoted by \Delta{}t's.
+2. Determine the number of detections within each fringe cycle via $\bar{n} \times \Delta t$
+3. Determine the phase, \phi, of these events in each fringe cycle.
+4. Find the timestamp of these events corresponding to the phase, \phi.
+
+We knew the rate for different two-photon coincidence rate type (i.e. the blue curve)
+will be in the form:
+
+$$ R_{\pm}(t) = \bar{n} \left(1 \pm V \cos(\delta_1 - \delta_2) \right) $$
+
+where $\bar{n}$ is the fringed-average value of R, and /V/ is the fringe visibility calculated
+from the fluxes of the two sources. We can determine \Delta{}t's from the curve, as well as the
+number of events in each fringe cycle.
+
+Now the form of R(t) tells us that the probability density function is of the form:
+
+$$ PDF(x) = \frac{1 \pm V\cos{(x)}}{2\pi}  \quad \quad \quad  x\in[-\pi, \pi] $$
+
+and the cumulative density function (CDF) after integrating PDF from -\pi to \phi.
+
+$$ CDF(\phi) = \frac{\phi \pm V\sin{(\phi)} + \pi}{2\pi}  \quad \quad \quad  \phi\in[-\pi, \pi] $$
+
+With a random number generator following Poisson distribution, we feed a number from 0 to 1
+to CDF. By inverting the CDF, we then obtain the phase, \phi, representing a coincidence.
+After obtaining \phi for each fringe cycle,
+we can just find the corresponding timestamp corresponding to R(t).
+
+**** MCMC Sampling
+
+After simulating our data points following Poisson distribution,
+now we explore the posterior using MCMC procedure. There are 4 parameters to vary,
+visibility, /V/, separation of the two sources in the east-west direction \Delta{}d_E,
+north-south direction \Delta{}d_N, and the arbitrary phase, \psi.
+
+The result gives a bunch of triangle correlation plots showing correlation between different
+parameters.
+
+#+attr_html: :width 75%
+#+caption: Triangle correlation polots generated via the [[https://github.com/dfm/corner.py][corner]] package. The vertical dashed lines represent 2.3%, 16%, 50%, 84%, and 99.4% quantiles of the GAussian. The orange point indicate the true value of each parameter.
+[[../content/research/interferometry/ew_1as_mix_20_1.png]]
+
+*** Result
+
+In the end, I was able to show two telescopes with an effective collecting area of $\sim 2\text{m}^2$,
+we could detect fringing and measure the astrometric separation of the sources at $\sim$ 10 \micro{}as
+in a few hours of observations.
+
+This work is published in [[https://journals.aps.org/prd/abstract/10.1103/PhysRevD.107.023015][Physical Review D]]

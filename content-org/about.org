@@ -1,0 +1,28 @@
+#+hugo_base_dir: ../
+
+* about
+** DONE about
+:PROPERTIES:
+   :EXPORT_FILE_NAME: index
+   :EXPORT_HUGO_SECTION: about
+   :EXPORT_DATE: <2025-01-30 Thu>
+   :EXPORT_HUGO_PUBLISHDATE:
+   :EXPORT_HUGO_EXPIRYDATE:
+   :EXPORT_AUTHOR: zhi
+   :EXPORT_HUGO_WEIGHT: auto
+   :EXPORT_TAGS:
+   :EXPORT_CATEGORIES:
+   :END:
+
+#+CAPTION: This is NianNian.
+#+attr_html: :width 35%
+[[/images/nian.jpg]]
+
+*Hi* there! I am a graduate student in astrophysics at [[https://www.stonybrook.edu/commcms/grad-physics-astronomy/][Stony Brook University]].
+I work with [[https://zingale.github.io/][Michael Zingale]] on the development of numerical algorithms and their applications
+in modeling astrophysical thermonuclear explosion events, such as X-ray bursts.
+
+Beyond academia, I enjoy playing fingerstyle guitar, reading manga,
+working on hands-on projects, and relaxing with my cat, NianNian.
+
+Feel free to reach out to me at zhi.chen.3@stonybrook.edu.
