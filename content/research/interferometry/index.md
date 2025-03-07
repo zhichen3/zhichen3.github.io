@@ -93,7 +93,7 @@ parameters.
 ## Result {#result}
 
 In the end, I was able to show two telescopes with an effective collecting area of \\(\sim 2\text{m}^2\\),
-we could detect fringing and measure the astrometric separation of the sources at \\(\sim\\) 10 &micro;as
-in a few hours of observations.
+we could detect fringing and measure the astrometric separation of the sources at \\(\sim\\) 100 &micro;as
+of precision in a few hours of observations.
 
 This work is published in [Physical Review D](https://journals.aps.org/prd/abstract/10.1103/PhysRevD.107.023015)
