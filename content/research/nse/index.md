@@ -49,9 +49,9 @@ to avoid the expensive integration.
 
 Some basic prerequisite for the reaction network include:
 
--   Contains a least proton and helium-4
--   Ideally the mass fraction in equilibrium obtained from integration
-    should match with the mass fraction obtained from NSE equation
+-   Contains a least proton and Helium-4.
+-   Mass fractions in equilibrium obtained from integration
+    should match with the mass fraction obtained from NSE equations.
 -   Screening is compatible with NSE, e.g. Chabrier &amp; Potekhin 1998 screening.
 
 
@@ -67,19 +67,21 @@ is shown in [1](#figure--fig:diagram)
 
 These checks include:
 
--   Min Temperature Check: temperature of the cell must exceed a certain value,
+1.  Minimum Temperature Check: temperature of the cell must exceed a certain value,
     by default this is 4 &times; 10<sup>9</sup>
--   Mass Abundance Check: compare the current mass abuandances to the NSE mass fractions.
 
-    If there are proton, neutron, and helium-4 are present in the network,
+2.  Mass Abundance Check: the current mass abundances should be close to the NSE
+    mass fractions.
+
+    If there are proton, neutron, and Helium-4 are present in the network,
     then define r = Y<sub>&alpha;</sub>/(Y<sub>p</sub><sup>2</sup>Y<sub>n</sub><sup>2</sup>) and r<sub>nse</sub> = (Y<sub>&alpha;</sub>/(Y<sub>p</sub><sup>2</sup>Y<sub>n</sub><sup>2</sup>))<sub>nse</sub>, and require
 
-    \\[ \frac{r - r\_{nse}}{r\_{nse}} < 0.5\\]
+    \\[ \frac{r - r\_{nse}}{r\_{nse}} < 0.5 \\]
 
     If there are only proton and helium-4, then define
     r = Y<sub>&alpha;</sub>/Y<sub>p</sub><sup>2</sup> and r<sub>nse</sub> = (Y<sub>&alpha;</sub>/(Y<sub>p</sub><sup>2</sup>))<sub>nse</sub> and require:
 
-    \\[ \frac{r - r\_{nse}}{r\_{nse}} < 0.25\\]
+    \\[ \frac{r - r\_{nse}}{r\_{nse}} < 0.25 \\]
 
     If the check above failed, then we proceed to an overall molar fraction check:
 
@@ -89,14 +91,14 @@ These checks include:
 
     \\[ \epsilon\_{rel} = \sum\_{i} \frac{\epsilon\_{abs} }{ Y^{i} }< \epsilon\_{rel}^{nse} \\]
 
--   NSE Grouping: Perform a grouping process to all the nuclei. Based on the final
+3.  NSE Grouping: Perform a grouping process to all the nuclei. Based on the final
     grouping configuration, we determine whether the network is currently in NSE or not.
 
 
 ## NSE Burn {#nse-burn}
 
 Once the cell is determined to be in NSE, mass fraction is determined by the NSE equation.
-However, a careful calculation is needed for finding the energy generation.
+However, a careful calculation is needed to determine the energy generation rates.
 
 
 ## Application: Double-Detonation {#application-double-detonation}
