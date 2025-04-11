@@ -5,7 +5,7 @@ date = 2025-02-20T00:00:00-05:00
 type = "gallery"
 draft = false
 weight = 2002
-image = "network_abar_50ms.png"
+image = "enuc_slice.png"
 +++
 
 ## Introduction {#introduction}

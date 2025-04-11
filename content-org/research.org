@@ -22,7 +22,7 @@ ongoing.
 :EXPORT_DATE: <2025-02-20 Thu>
 :EXPORT_HUGO_PUBLISHDATE:
 :EXPORT_HUGO_EXPIRYDATE:
-:EXPORT_HUGO_CUSTOM_FRONT_MATTER: :image "network_abar_50ms.png"
+:EXPORT_HUGO_CUSTOM_FRONT_MATTER: :image "enuc_slice.png"
 :EXPORT_AUTHOR: zhi
 :EXPORT_HUGO_WEIGHT: auto
 :EXPORT_HUGO_TYPE: gallery
@@ -45,14 +45,20 @@ In this work, we demonstrate the recent effort of implementing an adaptive NSE a
 in Castro/Microphysics code. We will show case its viability using a 2D sub-chandrasekhar
 double-detonation progenitor model for type Ia SN.
 *** Nuclear Statistical Equilibrium
-
 Nuclear Statistical Equilibrium (NSE) is an equilibrium state of the system where the
 forward and reverse strong reactions are in chemical equilibrium. By imposing chemical equilibrium,
-one can derive the equation that determines the composition in NSE:
+one can derive the equation that determines the composition in NSE, i.e. Eq. \ref{eq:nse},
 
-$$ X_i = \frac{m_i}{\rho}g_i \left(\frac{2\pi m_i k_B T}{h^2}\right)^{3/2} \exp{\left(\frac{Z_i \mu_p + N_i \mu_n + Q_i - u^C_i}{k_B T}\right)} $$
+\begin{equation}
+\label{eq:nse} \tag{1}
+X_i = \frac{m_i}{\rho}g_i \left(\frac{2\pi m_i k_B T}{h^2}\right)^{3/2} \exp{\left(\frac{Z_i \mu_p + N_i \mu_n + Q_i - u^C_i}{k_B T}\right)}
+\end{equation}
 
-Given (T, \rho, Y_{e}), then the NSE equation can be solved with two constraints:
+where /m_i/ is the mass, \rho is the density, /g_i/ is the temperature-dependent partition function,
+/T/ is temperature, /Z_i/ and /N_i/ are the proton and neutron number, /mu_p/ and /\mu_n/ are the chemical
+potential of free proton and neutron, /Q_i/ is the binding energy and /\mu^C/ is coulomb contribution.
+Given (T, \rho, Y_{e}), then Eq. \ref{eq:nse} can be solved with two constraints:
+
 1. Conservation of mass: $\sum_i X_i = 1$
 2. Conservation of charge: $Y_e = \sum_i \frac{Z_i X_i}{A_i}$
 
@@ -66,21 +72,25 @@ Some basic prerequisite for the reaction network include:
   should match with the mass fraction obtained from NSE equations.
 - Screening is compatible with NSE, e.g. Chabrier & Potekhin 1998 screening.
 *** NSE Conditions
-Before using the NSE equation, we must first determine whether the current
-simulation cell is in NSE. An overview of the NSE evolution schematic diagram
-is shown in [[fig:diagram]]
+An overview of the NSE evolution schematic diagram is shown in Figure [[fig:diagram]]
 
 #+name: fig:diagram
 #+attr_html: :width 75%
 #+caption: NSE evolution schematic diagram
 [[../content/research/nse/nse-schematic-diagram.png]]
 
-These checks include:
-1. Minimum Temperature Check: temperature of the cell must exceed a certain value,
-   by default this is 4 \times 10^{9}
+Before using the NSE equation, a list of checks shown in Figure [[fig:diagram]]
+are conducted to ensure the current simulation cell is in NSE.
 
-2. Mass Abundance Check: the current mass abundances should be close to the NSE
-   mass fractions.
+**** Minimum Temperature Check
+Temperature of the cell must exceed a certain value, by default this is 4 \times 10^{9} K,
+which NSE is not expected to occur at all.
+
+**** Mass Abundance Check
+The current mass abundances should be close to the NSE mass fractions.
+Note, we currently do not introduce any methods of handling the /quasi-NSE/ state
+when transitioning from a non-NSE state to NSEstate. Therefore, an abrupt change in the energy is expected.
+To avoid this
 
    If there are proton, neutron, and Helium-4 are present in the network,
    then define r = Y_{\alpha}/(Y_{p}^{2}Y_{n}^{2}) and r_{nse} = (Y_{\alpha}/(Y_{p}^{2}Y_{n}^{2}))_{nse}, and require
@@ -102,7 +112,6 @@ These checks include:
 
 3. NSE Grouping: Perform a grouping process to all the nuclei. Based on the final
    grouping configuration, we determine whether the network is currently in NSE or not.
-
 
 *** NSE Burn
 Once the cell is determined to be in NSE, mass fraction is determined by the NSE equation.
