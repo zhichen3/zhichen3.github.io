@@ -83,14 +83,18 @@ Before using the NSE equation, a list of checks shown in Figure [[fig:diagram]]
 are conducted to ensure the current simulation cell is in NSE.
 
 **** Minimum Temperature Check
-Temperature of the cell must exceed a certain value, by default this is 4 \times 10^{9} K,
-which NSE is not expected to occur at all.
+Require
+
+$$ T > T_{min} $$
+
+Temperature of the cell must exceed a certain value, by default T_{min} = 4 \times 10^{9} K.
+Under this temperature, NSE is not expected to occur at all.
 
 **** Mass Abundance Check
 The current mass abundances should be close to the NSE mass fractions.
 Note, we currently do not introduce any methods of handling the /quasi-NSE/ state
-when transitioning from a non-NSE state to NSEstate. Therefore, an abrupt change in the energy is expected.
-To avoid this
+when transitioning from a non-NSE state to NSEstate. Therefore, an abrupt change
+in the energy is expected. To avoid this
 
    If there are proton, neutron, and Helium-4 are present in the network,
    then define r = Y_{\alpha}/(Y_{p}^{2}Y_{n}^{2}) and r_{nse} = (Y_{\alpha}/(Y_{p}^{2}Y_{n}^{2}))_{nse}, and require
@@ -110,8 +114,97 @@ To avoid this
 
    $$ \epsilon_{rel} = \sum_{i} \frac{\epsilon_{abs} }{ Y^{i} }< \epsilon_{rel}^{nse} $$
 
-3. NSE Grouping: Perform a grouping process to all the nuclei. Based on the final
-   grouping configuration, we determine whether the network is currently in NSE or not.
+**** NSE Grouping Procedure
+A grouping process is performed to all the nuclei based
+on the available reaction rates.
+Based on the final grouping configuration,
+we determine whether the network is currently in NSE or not.
+
+1. Determine the reaction timescale for the available reaction rates,
+   which is defined as
+
+   $$ t_{i,k} = \frac{Y_i}{min(b_{f}(k), b_{r}(k)) $$
+
+   where $Y_i$ is the molar fraction of the /i-th/ isotope in the reaction
+   that is different from /p/, /n/, and /\alpha/. Note that due to the constraints
+   we have below, there can be at most two of these nuclei in a given
+   reaction. The smaller $Y_i$ is chosen.
+
+   Consider the /k-th/ reaction of the following form:
+
+   $$ A + B \rightleftarrows C + D $$
+
+   /b_{f}(k)/ and /b_{r}(k)/ are the forward and reverse reaction rate
+    of the /k-th/ reaction, which is defined as following:
+
+   $$ b_{f,r}(k) = (1 + \sigma_{AB,CD}) \rho Y_{A,C} Y_{B,D} \frac{N_A <\sigma v>_{f,r}}{1 + \sigma_{AB,CD}} $$
+
+   or if only single reactant or product is involved then:
+
+   $$ b_{f,r}(k) = |Y_{A,C} N_A <\sigma v>_{f,r}| $$
+
+   Note, some reactions are skipped during the process,
+   and the timescale for these reactions are set to be largest or slowest:
+
+   1. Reactions that have no reverse rates.
+
+   2. Reactions involve more than three reactants or products involved.
+
+   3. Reactions involve more than 2 non- /n/, /p/, and /\alpha/ in reactants
+      and products.
+
+   All reaction timescales are initialized with a maximum (slowest) machine
+   number. If all the criteria are satisfied above, then the reaction
+   timescale is computed.
+
+   Lastly, we require the forward and reverse rates are close to each other:
+
+   $$ \frac{2.0 |b_f(k) - b_r(k)|}{b_f(k) + b_r(k)} < \epsilon  $$
+
+   and the reaction timescale must be faster compared to the
+   sound-crossing timescale:
+
+   $$ t_{i,k} = \epsilon t_s $$
+
+   where the sound crossing time, $t_s$ is defined as:
+
+   $$ t_s = \frac{min(dx[0], dx[1], dx[2])}{c_s} $$
+
+   where dx is the size of the simulation cell and $c_s$ is the sound speed,
+   and \epsilon is chosen by the user, which is typically \sim 0.1 or 0.01.
+
+   Reaction rates with all these requirements satisfied will carry out
+   reaction timescales that will be used later for the grouping process.
+
+2. To start the grouping process, all nuclei except /p/, /n/, and /\alpha/
+   initially form a group on their own.
+   /p/, /n/, and /\alpha/ form a single group, called the light-isotope-group or LIG.
+
+3. Grouping process starts from the fastest reaction timescale.
+   We have already filtered out reaction rates that don't satisfy the NSE
+   conditions during the calculation of the reaction timescale.
+
+   Here consider two cases during the grouping process:
+
+   1. If there are exactly two isotopes involved in the /k-th/ reaction that are
+      not in LIG, then merge the isotope in the smaller group into the
+      isotop in the larger group.
+
+      *Note, in this case, we skip this reaction if both isotopes are*
+      *already in the same group. (Perhaps we can still merge the nonLIG group*
+      *to LIG at this point)???*
+
+   2. If there is only 1 isotope involved in the /k-th/ reaction that is not
+      in LIG, then merge that isotope and the group that it's in into LIG
+
+4. A final grouping configuration is obtained after the grouping process.
+
+   1. If the network has neutron, then define NSE if all the nuclei are in
+      the single group with an optional LIG.
+
+   2. If the network does not have neutron, then consider a looser constraint
+      where for isotopes  $\Zstroke \geq 14$, isotopes with odd N and even N
+      form two distinct groups.
 
 *** NSE Burn
 Once the cell is determined to be in NSE, mass fraction is determined by the NSE equation.
