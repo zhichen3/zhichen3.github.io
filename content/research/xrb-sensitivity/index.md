@@ -4,7 +4,7 @@ author = ["zhi"]
 date = 2025-02-02T00:00:00-05:00
 type = "gallery"
 draft = false
-weight = 2002
+weight = 2003
 image = "network_abar_50ms.png"
 +++
 
@@ -127,7 +127,7 @@ Figure [5](#figure--fig:profile) at \\(t \sim 20\\) ms, as well as an early fuel
 {{< figure src="/ox-hugo/network_front_finesst.png" caption="<span class=\"figure-number\">Figure 7: </span>Time evolution of the flame front position. An initial acceleration phase is observed for _subch\\_simple_ (red) in contrast to a global uniform flame propagation in _aprox13_ (blue)." width="40%" >}}
 
 In terms of flame speed, Figure [7](#figure--fig:front) shows as initial short acceleration phase
-for _subch_simple_ following by an uniform speed of \\(\sim 1.5 \ \text{km} \ \text{s}^{-1}\\) similar to _aprox13_.
+for _subch_simple_ following by an uniform speed of \\(\sim 5.0 \ \text{km} \ \text{s}^{-1}\\) similar to _aprox13_.
 By extrapolating beyond the data, calculations show both models takes \\(\sim 1.5\\) s
 to reach 30 km, roughly the distance flame needs to travel to engulf the entire star.
 This matches with the rise time of the light curve as we discussed previously.

@@ -359,7 +359,7 @@ Figure [[fig:profile]] at $t \sim 20$ ms, as well as an early fuel exhaustion co
 
 
 In terms of flame speed, Figure [[fig:front]] shows as initial short acceleration phase
-for /subch_simple/ following by an uniform speed of $\sim 1.5 \ \text{km} \ \text{s}^{-1}$ similar to /aprox13/.
+for /subch_simple/ following by an uniform speed of $\sim 5.0 \ \text{km} \ \text{s}^{-1}$ similar to /aprox13/.
 By extrapolating beyond the data, calculations show both models takes $\sim 1.5$ s
 to reach 30 km, roughly the distance flame needs to travel to engulf the entire star.
 This matches with the rise time of the light curve as we discussed previously.
