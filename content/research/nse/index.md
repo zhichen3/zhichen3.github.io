@@ -47,18 +47,18 @@ Given (T, &rho;, Y<sub>e</sub>), then Eq. \ref{eq:nse} can be solved with two co
 1.  Conservation of mass: \\(\sum\_i X\_i = 1\\)
 2.  Conservation of charge: \\(Y\_e = \sum\_i \frac{Z\_i X\_i}{A\_i}\\)
 
-Therefore, we can do an algebraic solve, e.g. Hybrid-Powell method or Newton-Raphson method,
-to avoid the expensive integration.
+Therefore, we can do an algebraic solve, e.g. Hybrid-Powell method or
+Newton-Raphson method, to avoid the expensive integration.
 
 
 ## Network Prerequisite {#network-prerequisite}
 
 Some basic prerequisite for the reaction network include:
 
--   Contains a least proton and Helium-4.
--   Mass fractions in equilibrium obtained from integration
+1.  Contains a least proton and Helium-4.
+2.  Mass fractions in equilibrium obtained from integration
     should match with the mass fraction obtained from NSE equations.
--   Screening is compatible with NSE, e.g. Chabrier &amp; Potekhin 1998 screening.
+3.  Screening is compatible with NSE, e.g. Chabrier &amp; Potekhin 1998 screening.
 
 
 ## NSE Conditions {#nse-conditions}
@@ -87,26 +87,26 @@ Under this temperature, NSE is not expected to occur at all.
 
 The current mass abundances should be close to the NSE mass fractions.
 Note, we currently do not introduce any methods of handling the _quasi-NSE_ state
-when transitioning from a non-NSE state to NSEstate. Therefore, an abrupt change
+when transitioning from a non-NSE state to NSE state. Therefore, an abrupt change
 in the energy is expected. To avoid this
 
 If there are proton, neutron, and Helium-4 are present in the network,
-then define r = Y<sub>&alpha;</sub>/(Y<sub>p</sub><sup>2</sup>Y<sub>n</sub><sup>2</sup>) and r<sub>nse</sub> = (Y<sub>&alpha;</sub>/(Y<sub>p</sub><sup>2</sup>Y<sub>n</sub><sup>2</sup>))<sub>nse</sub>, and require
+then define r = Y<sub>&alpha;</sub>/(Y<sub>p</sub><sup>2</sup>Y<sub>n</sub><sup>2</sup>) and r<sub>\mathrm{nse}</sub> = (Y<sub>&alpha;</sub>/(Y<sub>p</sub><sup>2</sup>Y<sub>n</sub><sup>2</sup>))<sub>\mathrm{nse}</sub>, and require
 
-\\[ \frac{r - r\_{nse}}{r\_{nse}} < 0.5 \\]
+\\[ \frac{r - r\_{\mathrm{nse}}}{r\_{\mathrm{nse}}} < 0.5 \\]
 
 If there are only proton and helium-4, then define
-r = Y<sub>&alpha;</sub>/Y<sub>p</sub><sup>2</sup> and r<sub>nse</sub> = (Y<sub>&alpha;</sub>/(Y<sub>p</sub><sup>2</sup>))<sub>nse</sub> and require:
+r = Y<sub>&alpha;</sub>/Y<sub>p</sub><sup>2</sup> and r<sub>\mathrm{nse}</sub> = (Y<sub>&alpha;</sub>/(Y<sub>p</sub><sup>2</sup>))<sub>\mathrm{nse}</sub> and require:
 
-\\[ \frac{r - r\_{nse}}{r\_{nse}} < 0.25 \\]
+\\[ \frac{r - r\_{\mathrm{nse}}}{r\_{\mathrm{nse}}} < 0.25 \\]
 
 If the check above failed, then we proceed to an overall molar fraction check:
 
-\\[ \epsilon\_{abs} = \sum\_{i} |Y^{i} - Y^{i}\_{nse}| < \epsilon\_{abs}^{nse} \\]
+\\[ \epsilon\_{\mathrm{abs}} = \sum\_{i} |Y^{i} - Y^{i}\_{\mathrm{nse}}| < \epsilon\_{\mathrm{abs}}^{\mathrm{nse}} \\]
 
 and
 
-\\[ \epsilon\_{rel} = \sum\_{i} \frac{\epsilon\_{abs} }{ Y^{i} }< \epsilon\_{rel}^{nse} \\]
+\\[ \epsilon\_{\mathrm{rel}} = \sum\_{i} \frac{\epsilon\_{\mathrm{abs}} }{ Y^{i} }< \epsilon\_{\mathrm{rel}}^{\mathrm{nse}} \\]
 
 
 ### NSE Grouping Procedure {#nse-grouping-procedure}
@@ -116,99 +116,119 @@ on the available reaction rates.
 Based on the final grouping configuration,
 we determine whether the network is currently in NSE or not.
 
-1.  Determine the reaction timescale for the available reaction rates,
-    which is defined as
 
-    \\[ t\_{i,k} = \frac{Y\_i}{min(b\_{f}(k), b\_{r}(k)) \\]
+#### Determine Reaction Timescale {#determine-reaction-timescale}
 
-    where \\(Y\_i\\) is the molar fraction of the _i-th_ isotope in the reaction
-    that is different from _p_, _n_, and _&alpha;_. Note that due to the constraints
-    we have below, there can be at most two of these nuclei in a given
-    reaction. The smaller \\(Y\_i\\) is chosen.
+Determine the reaction timescale for the available reaction rates,
+which is defined as
 
-    Consider the _k-th_ reaction of the following form:
+\\[ t\_{i,k} = \frac{Y\_i}{\min(b\_{f}(k), b\_{r}(k))} \\]
 
-    \\[ A + B \rightleftarrows C + D \\]
+where \\(Y\_i\\) is the molar fraction of the _i-th_ isotope in the reaction
+that is different from _p_, _n_, and _&alpha;_. Note that due to the constraints
+we have below, there can be at most two of these nuclei in a given
+reaction. The smaller \\(Y\_i\\) is chosen.
 
-    _b<sub>f</sub>(k)_ and _b<sub>r</sub>(k)_ are the forward and reverse reaction rate
-     of the _k-th_ reaction, which is defined as following:
+Consider the _k-th_ reaction of the following form:
 
-    \\[ b\_{f,r}(k) = (1 + \sigma\_{AB,CD}) \rho Y\_{A,C} Y\_{B,D} \frac{N\_A <\sigma v>\_{f,r}}{1 + \sigma\_{AB,CD}} \\]
+\\[ A + B \rightleftarrows C + D \\]
 
-    or if only single reactant or product is involved then:
+_b<sub>f</sub>(k)_ and _b<sub>r</sub>(k)_ are the forward and reverse reaction rate
+of the _k-th_ reaction, which is defined as following:
 
-    \\[ b\_{f,r}(k) = |Y\_{A,C} N\_A <\sigma v>\_{f,r}| \\]
+\\[ b\_{f,r}(k) = (1 + \sigma\_{AB,CD}) \rho Y\_{A,C} Y\_{B,D} \frac{N\_A <\sigma v>\_{f,r}}{1 + \sigma\_{AB,CD}} \\]
 
-    Note, some reactions are skipped during the process,
-    and the timescale for these reactions are set to be largest or slowest:
+or if only single reactant or product is involved then:
 
-    1.  Reactions that have no reverse rates.
+\\[ b\_{f,r}(k) = |Y\_{A,C} N\_A <\sigma v>\_{f,r}| \\]
 
-    2.  Reactions involve more than three reactants or products involved.
+Note, some reactions are skipped during the process,
+and the timescale for these reactions are set to be largest or slowest:
 
-    3.  Reactions involve more than 2 non- _n_, _p_, and _&alpha;_ in reactants
-        and products.
+1.  Reactions that have no reverse rates.
+2.  Reactions involve more than three reactants or products involved.
+3.  Reactions involve more than 2 non- _n_, _p_, and _&alpha;_ in reactants
+    and products.
 
-    All reaction timescales are initialized with a maximum (slowest) machine
-    number. If all the criteria are satisfied above, then the reaction
-    timescale is computed.
+All reaction timescales are initialized with a maximum (slowest) machine
+number. If all the criteria are satisfied above, then the reaction
+timescale is computed.
 
-    Lastly, we require the forward and reverse rates are close to each other:
+Lastly, we require the forward and reverse rates are close to each other:
 
-    \\[ \frac{2.0 |b\_f(k) - b\_r(k)|}{b\_f(k) + b\_r(k)} < \epsilon  \\]
+\\[ \frac{2.0 |b\_f(k) - b\_r(k)|}{b\_f(k) + b\_r(k)} < \epsilon  \\]
 
-    and the reaction timescale must be faster compared to the
-    sound-crossing timescale:
+and the reaction timescale must be faster compared to the
+sound-crossing timescale:
 
-    \\[ t\_{i,k} = \epsilon t\_s \\]
+\\[ t\_{i,k} = \epsilon t\_s \\]
 
-    where the sound crossing time, \\(t\_s\\) is defined as:
+where the sound crossing time, \\(t\_s\\) is defined as:
 
-    \\[ t\_s = \frac{min(dx[0], dx[1], dx[2])}{c\_s} \\]
+\\[ t\_s = \frac{\min(\mathrm{dx}[0], \mathrm{dx}[1], \mathrm{dx}[2])}{c\_s} \\]
 
-    where dx is the size of the simulation cell and \\(c\_s\\) is the sound speed,
-    and &epsilon; is chosen by the user, which is typically &sim; 0.1 or 0.01.
+where dx is the size of the simulation cell and \\(c\_s\\) is the sound speed,
+and &epsilon; is chosen by the user, which is typically &sim; 0.1 or 0.01.
 
-    Reaction rates with all these requirements satisfied will carry out
-    reaction timescales that will be used later for the grouping process.
+Reaction rates with all these requirements satisfied will carry out
+reaction timescales that will be used later for the grouping process.
 
-2.  To start the grouping process, all nuclei except _p_, _n_, and _&alpha;_
-    initially form a group on their own.
-    _p_, _n_, and _&alpha;_ form a single group, called the light-isotope-group or LIG.
 
-3.  Grouping process starts from the fastest reaction timescale.
-    We have already filtered out reaction rates that don't satisfy the NSE
-    conditions during the calculation of the reaction timescale.
+#### Initialization {#initialization}
 
-    Here consider two cases during the grouping process:
+To start the grouping process, all nuclei except _p_, _n_, and _&alpha;_
+initially form a group on their own.
+_p_, _n_, and _&alpha;_ form a single group, called the light-isotope-group or LIG.
 
-    1.  If there are exactly two isotopes involved in the _k-th_ reaction that are
-        not in LIG, then merge the isotope in the smaller group into the
-        isotop in the larger group.
 
-        **Note, in this case, we skip this reaction if both isotopes are**
-        **already in the same group. (Perhaps we can still merge the nonLIG group**
-        **to LIG at this point)???**
+#### Grouping Process {#grouping-process}
 
-    2.  If there is only 1 isotope involved in the _k-th_ reaction that is not
-        in LIG, then merge that isotope and the group that it's in into LIG
+Grouping process starts from the fastest reaction timescale.
+We have already filtered out reaction rates that don't satisfy the NSE
+conditions during the calculation of the reaction timescale.
 
-4.  A final grouping configuration is obtained after the grouping process.
-    1.  If the network has neutron, then define NSE if all the nuclei are in
-        the single group with an optional LIG.
+Here consider two cases during the grouping process:
 
-    2.  If the network does not have neutron, then consider a looser constraint
-        where for isotopes  \\(\Zstroke \geq 14\\), isotopes with odd N and even N
-        form two distinct groups.
+1.  If there are exactly two isotopes involved in the _k-th_ reaction that are not in LIG, then merge the isotope in the smaller group into the isotop in the larger group.
+    **Note, in this case, we skip this reaction if both isotopes are**
+    **already in the same group. (Perhaps we can still merge the nonLIG group**
+    **to LIG at this point)???**
+2.  If there is only 1 isotope involved in the _k-th_ reaction that is not
+    in LIG, then merge that isotope and the group that it's in into LIG
+
+
+#### Grouping Configuration {#grouping-configuration}
+
+A final grouping configuration is obtained after the grouping process.
+
+1.  If the network has neutron, then define NSE if all the nuclei are in the single group with an optional LIG.
+2.  If the network does not have neutron, then consider a looser constraint where for isotopes  \\(Z \geq 14\\), isotopes with odd N and even N form two distinct groups.
 
 
 ## NSE Burn {#nse-burn}
 
 Once the cell is determined to be in NSE, mass fraction is determined by the NSE equation.
-However, a careful calculation is needed to determine the energy generation rates.
+However, a careful calculation is needed to determine &rho;, T, and \\(Y\_e\\) of the next time step
+to accurately determine the appropriate NSE state as well as energy generation rates.
+We will proceed with a 2nd order Runge-Kutta scheme following the same fashion described
+in this [paper](https://iopscience.iop.org/article/10.3847/1538-4357/ad8a66), which uses a table that stores NSE states at different theromodynamic conditions
+instead of solving the NSE state directly on the grid.
 
 
 ## Application: Double-Detonation {#application-double-detonation}
+
+Here we showcase the use of NSE integration in the double-detonation
+model for Type Ia Supernovae. The supernovae starts off with a surface
+helium detonation, which releases a shock wave inward to the carbon core,
+which is indicated by the density gradient. This shock wave ignites the
+carbon core releasing the carbon detonation. During carbon detonation,
+temperature can reach more than &sim; 6 billion Kelvin, which is
+sufficient for the core to be in NSE.
+
+The movie below showcases the double-detonation, where the
+black curve in the energy generation plot maps out the outline
+at which NSE takes place. We basically see the NSE region grows
+as the second detonation propagates outward.
 
 <video width="1000" height="600" controls><source src="/videos/subchandra.mp4" type="video/mp4">
 Your browser does not support the video tag.
