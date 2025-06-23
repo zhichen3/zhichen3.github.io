@@ -51,13 +51,13 @@ one can derive the equation that determines the composition in NSE, i.e. Eq. \re
 
 \begin{equation}
 \label{eq:nse} \tag{1}
-X_i = \frac{m_i}{\rho}g_i \left(\frac{2\pi m_i k_B T}{h^2}\right)^{3/2} \exp{\left(\frac{Z_i \mu_p + N_i \mu_n + Q_i - u^C_i}{k_B T}\right)}
+X_i = \frac{m_i}{\rho}g_i \left(\frac{2\pi m_i k_B T}{h^2}\right)^{3/2} \exp{\left(\frac{Z_i \mu_p + N_i \mu_n + B_i - u^C_i}{k_B T}\right)}
 \end{equation}
 
 where /m_i/ is the mass, \rho is the density, /g_i/ is the temperature-dependent partition function,
 /T/ is temperature, /Z_i/ and /N_i/ are the proton and neutron number, /mu_p/ and /\mu_n/ are the chemical
-potential of free proton and neutron, /Q_i/ is the binding energy and /\mu^C/ is coulomb contribution.
-Given (T, \rho, Y_{e}), then Eq. \ref{eq:nse} can be solved with two constraints:
+potential of free proton and neutron, /B_i/ is the binding energy and /\mu^C/ is coulomb contribution.
+Given (\rho, T, Y_{e}), then Eq. \ref{eq:nse} can be solved with two constraints:
 
 1. Conservation of mass: $\sum_i X_i = 1$
 2. Conservation of charge: $Y_e = \sum_i \frac{Z_i X_i}{A_i}$
@@ -203,10 +203,61 @@ A final grouping configuration is obtained after the grouping process.
 Once the cell is determined to be in NSE, mass fraction is determined by the NSE equation.
 However, a careful calculation is needed to determine \rho, T, and $Y_e$ of the next time step
 to accurately determine the appropriate NSE state as well as energy generation rates.
-We will proceed with a 2nd order Runge-Kutta scheme following the same fashion described
+We will proceed with a 2nd order Runge-Kutta scheme following the similar fashion described
 in this [[https://iopscience.iop.org/article/10.3847/1538-4357/ad8a66][paper]], which uses a table that stores NSE states at different theromodynamic conditions
 instead of solving the NSE state directly on the grid.
 
+During the reactive update, the quantities we want to update are
+$\rho$, $\rho \vec{U}$, $\rho e$, $\rho E$, and $\rho X_k$. They are updated with the form:
+
+$$ \boldsymbol{\mathcal{U}}^{n+1} = \boldsymbol{\mathcal{U}}^{n} + \Delta t \left([\boldsymbol{\mathcal{A}}(\boldsymbol{\mathcal{U}})]^{n+1/2} + [{\bf R}(\boldsymbol{\mathcal{U}})]^{n+1/2}\right) $$
+
+The advective contribution, $\boldsymbol{\mathcal{A}}(\boldsymbol{\mathcal{U}})$,
+is already time-centered from the simplified-SDC algorithm,
+so it comes down to evaluate the midpoint reactive source,
+$[{\bf R}(\boldsymbol{\mathcal{U}})]^{n+1/2}$. The general steps are the following:
+
+1. Compute the advective source term for $Y_e$ via:
+  $$ \boldsymbol{\mathcal{A}}(\rho Y_e) = \sum_k \frac{Z_k}{A_k} \boldsymbol{\mathcal{A}}(\rho X_k) $$
+  Note that this bit is already time-centered.
+2. Compute $[{\bf R}(\rho Y_e)]^n$ and $[{\bf R}(\rho e)_{\mathrm{nuc}}]^n$ using
+   $[\rho]^n$, $[T]^n$, $[Y_e]^n$ and $[e]^n$:
+  1. Find the NSE composition with given $[\rho]^n$, $[e]^n$,
+     and $[Y_e]^n$. An EOS inversion algorithm is used so
+     that we determine $[T^*]^n$ such that $[e]^n$ remains
+     unchanged after switching to the NSE composition.
+     Here we use $[T]^n$ as the initial guess and updated
+     to the solution, $[T^*]^n$, in the end.
+  2. Compute the thermal neutrino losses,
+     $\epsilon_{\nu,\mathrm{thermal}}$, using the NSE composition.
+  3. Evaluate $\dot{Y}_{\mathrm{weak}}$ and neutrino losses, $\epsilon_{\nu,\mathrm{react}}$,
+     from weak reactions only as they are the only contributing reactions in NSE.
+  4. Evaluate $[{\bf R}(\rho Y_e)]^n$ as:
+     $$ [{\bf R}(\rho Y_e)]^n = [\rho]^n \sum_k Z_k [\dot{Y}_{\mathrm{k, weak}}]^n $$
+  5. Evaluate $[{\bf R}(\rho e)_{\mathrm{nuc}}]^n$ as:
+     $$ [{\bf R}(\rho e)_{\mathrm{nuc}}]^n = - N_A c^2 \sum_k [\dot{Y}_{\mathrm{k, weak}}]^n m_k $$
+     where the nuclei mass, $m_k$ is defined as:
+     $$ m_k c^2 = (A_k - Z_k) m_n c^2 + Z_k (m_p + m_e) c^2 - B_k $$
+  6. The full reactive source term, $[{\bf R}(\rho e)]^n$ is then:
+     $$ [{\bf R}(\rho e)]^n = [{\bf R}(\rho e)_{\mathrm{nuc}}]^n - [\rho]^n \left(\epsilon_{\nu,\mathrm{thermal}} + \epsilon_{\nu,\mathrm{react}}\right) $$
+3. Now evolve $\rho$, $\rho e$, and $\rho Y_e$ to midpoint in time:
+   $$ \boldsymbol{\mathcal{U}}^{n+1/2} = \boldsymbol{\mathcal{U}}^{n} + \frac{\Delta t}{2} \left([\boldsymbol{\mathcal{A}}(\boldsymbol{\mathcal{U}})]^{n+1/2} + [{\bf R}(\boldsymbol{\mathcal{U}})]^{n}\right) $$
+   Note that there is no reactive source term for $\rho$ and the advective
+   source term is constant throughout the reactive update.
+4. Compute $[{\bf R}(\rho Y_e)]^{n+1/2}$ and
+   $[{\bf R}(\rho e)_{\mathrm{nuc}}]^{n+1/2}$ following the same
+   procedure as above. This time, it uses
+   $[\rho]^{n+1/2}$, $[Y_e]^{n+1/2}$ and $[e]^{n+1/2}$ as input
+   and uses the updated $[T]^n$ as initial guess for the EOS inversion
+   algorithm.
+
+Now that we obtain the midpoint reactive source term, we can
+evolve all thermodynamic quantities to new time, $t^{n+1}$ via:
+
+$$ \boldsymbol{\mathcal{U}}^{n+1} = \boldsymbol{\mathcal{U}}^{n} + \Delta t \left([\boldsymbol{\mathcal{A}}(\boldsymbol{\mathcal{U}})]^{n+1/2} + [{\bf R}(\boldsymbol{\mathcal{U}})]^{n+1/2}\right) $$
+
+Lastly, the composition is updated by finding the corresponding NSE state
+using $[\rho]^{n+1}$, $[e]^{n+1}$, and $[Y_e]^{n+1}$.
 
 *** Application: Double-Detonation
 Here we showcase the use of NSE integration in the double-detonation
