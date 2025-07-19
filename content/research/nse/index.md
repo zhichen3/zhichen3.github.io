@@ -31,11 +31,18 @@ double-detonation progenitor model for type Ia SN.
 ## Nuclear Statistical Equilibrium {#nuclear-statistical-equilibrium}
 
 Nuclear Statistical Equilibrium (NSE) is an equilibrium state of the system where the
-forward and reverse strong reactions are in chemical equilibrium. By imposing chemical equilibrium,
+forward and reverse strong reactions are in chemical equilibrium.
+By imposing chemical equilibrium,
+
+\begin{equation}
+\label{eq:nse\_cond} \tag{1}
+\mu\_i = Z\_i \mu\_p + N\_i \mu\_n
+\end{equation}
+
 one can derive the equation that determines the composition in NSE, i.e. Eq. \ref{eq:nse},
 
 \begin{equation}
-\label{eq:nse} \tag{1}
+\label{eq:nse} \tag{2}
 X\_i = \frac{m\_i}{\rho}g\_i \left(\frac{2\pi m\_i k\_B T}{h^2}\right)^{3/2} \exp{\left(\frac{Z\_i \mu\_p + N\_i \mu\_n + Q\_i - u^C\_i}{k\_B T}\right)}
 \end{equation}
 
