@@ -142,9 +142,9 @@ without extrapolation.
 
 ## Summary {#summary}
 
-<video width="1000" height="600" controls><source src="/videos/xrb-sensitivity.mp4" type="video/mp4">
-Your browser does not support the video tag.
-Videos only work in static folders.</video>
+<video width="1000" height="600" controls>[[file:xrb-sensitivity/xrb-sensitivity.mp4]]
+<source src="xrb-sensitivity.mp4" type="video/mp4">
+Your browser does not support the video tag.</video>
 
 All the results shown proves that \\({}^{12}\mbox{C}(\mbox{p}, \gamma) {}^{13}\mbox{N}(\alpha, \mbox{p}){}^{16}\mbox{O}\\)
 is critical for an accurate modeling of the laterally propagating He flames in X-ray bursts

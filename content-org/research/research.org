@@ -295,9 +295,9 @@ as the second detonation propagates outward.
 #+attr_html: :width 1000 :height 600 :controls t
 #+caption: A movie showing double-detonation.
 #+begin_video
-<source src="/videos/subchandra.mp4" type="video/mp4">
+[[file:nse/subchandra.mp4]]
+<source src="subchandra.mp4" type="video/mp4">
 Your browser does not support the video tag.
-Videos only work in static folders.
 #+end_video
 
 * DONE Sensitivity of He Flames in X-ray Bursts to Nuclear Physics
@@ -455,9 +455,9 @@ without extrapolation.
 #+attr_html: :width 1000 :height 600 :controls t
 #+caption: A movie showing He flame propagation using subch network.
 #+begin_video
-<source src="/videos/xrb-sensitivity.mp4" type="video/mp4">
+[[file:xrb-sensitivity/xrb-sensitivity.mp4]]
+<source src="xrb-sensitivity.mp4" type="video/mp4">
 Your browser does not support the video tag.
-Videos only work in static folders.
 #+end_video
 
 All the results shown proves that ${}^{12}\mbox{C}(\mbox{p}, \gamma) {}^{13}\mbox{N}(\alpha, \mbox{p}){}^{16}\mbox{O}$
