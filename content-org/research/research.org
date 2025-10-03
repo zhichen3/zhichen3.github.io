@@ -1,0 +1,565 @@
+#+HUGO_BASE_DIR: ../../
+#+HUGO_SECTION: research
+* Research
+** TODO The Effect of Coriolis Force Variations on X-ray Burst Flame Dynamics
+:PROPERTIES:
+:EXPORT_FILE_NAME: index.md
+:EXPORT_HUGO_SECTION: research/xrb-spherical
+:EXPORT_DATE: <2025-02-02 Sun>
+:EXPORT_HUGO_PUBLISHDATE:
+:EXPORT_HUGO_EXPIRYDATE:
+:EXPORT_HUGO_CUSTOM_FRONT_MATTER: :image "network_abar_50ms.png"
+:EXPORT_AUTHOR: zhi
+:EXPORT_HUGO_WEIGHT: auto
+:EXPORT_HUGO_TYPE: gallery
+:END:
+
+ongoing.
+
+** DONE Adaptive Nuclear Statistical Equilibrium for Type Ia SN Simulation
+:PROPERTIES:
+:EXPORT_FILE_NAME: index
+:EXPORT_HUGO_BUNDLE: nse
+:EXPORT_DATE: <2025-02-20 Thu>
+:EXPORT_HUGO_PUBLISHDATE:
+:EXPORT_HUGO_EXPIRYDATE:
+:EXPORT_HUGO_CUSTOM_FRONT_MATTER: :image "enuc_slice.png"
+:EXPORT_AUTHOR: zhi
+:EXPORT_HUGO_WEIGHT: auto
+:EXPORT_HUGO_TYPE: gallery
+:END:
+#+ATTR_HTML: :class resource-copy
+[[file:nse/enuc_slice.png]]
+*** Introduction
+Due to the stiff nature of solving reaction equations for simulating
+thermonuclear explosions, i.e. Type Ia SN and X-ray bursts, these simulations
+require careful coupling of hydrodynamics and reactions to avoid being limited
+by the nuclear reaction timescale instead of hydrodynamic timescale.
+But as temperature reaches beyond ~ 6 billion Kelvin, numerical integration
+becomes even more challenging when the timescale of the composition to reach
+statistical equilibrium is much shorter than the sound crossing time.
+Inspired by earlier [[https://academic.oup.com/mnras/article/493/4/5413/5766330?login=false][work in the community]] at adaptively evaluating the
+nuclear statistical equilibrium (NSE) conditions, we have implemented an
+adaptive NSE method in our simplified spectral-deferred-corrections (SDC)
+coupling of hydrodynamics and reactions. This can seamlessly transition from
+integrating a network to imposing the equilibrium during the reaction update of a simulation.
+
+In this work, we demonstrate the recent effort of implementing an adaptive NSE algorithm
+in Castro/Microphysics code. We will show case its viability using a 2D sub-chandrasekhar
+double-detonation progenitor model for type Ia SN.
+*** Nuclear Statistical Equilibrium
+Nuclear Statistical Equilibrium (NSE) is an equilibrium state of the system where the
+forward and reverse strong reactions are in chemical equilibrium.
+By imposing chemical equilibrium,
+
+\begin{equation}
+\label{eq:nse_cond} \tag{1}
+\mu_i = Z_i \mu_p + N_i \mu_n
+\end{equation}
+
+one can derive the equation that determines the composition in NSE, i.e. Eq. \ref{eq:nse},
+
+\begin{equation}
+\label{eq:nse} \tag{2}
+X_i = \frac{m_i}{\rho}g_i \left(\frac{2\pi m_i k_B T}{h^2}\right)^{3/2} \exp{\left(\frac{Z_i \mu_p + N_i \mu_n + B_i - u^C_i}{k_B T}\right)}
+\end{equation}
+
+where /m_i/ is the mass, \rho is the density, /g_i/ is the temperature-dependent partition function,
+/T/ is temperature, /Z_i/ and /N_i/ are the proton and neutron number, /mu_p/ and /\mu_n/ are the chemical
+potential of free proton and neutron, /B_i/ is the binding energy and /\mu^C/ is coulomb contribution.
+Given (\rho, T, Y_{e}), then Eq. \ref{eq:nse} can be solved with two constraints:
+
+1. Conservation of mass: $\sum_i X_i = 1$
+2. Conservation of charge: $Y_e = \sum_i \frac{Z_i X_i}{A_i}$
+
+Therefore, we can do an algebraic solve, e.g. Hybrid-Powell method or
+Newton-Raphson method, to avoid the expensive integration.
+
+*** Network Prerequisite
+Some basic prerequisite for the reaction network include:
+1. Contains a least proton and Helium-4.
+2. Mass fractions in equilibrium obtained from integration
+  should match with the mass fraction obtained from NSE equations.
+3. Screening is compatible with NSE, e.g. Chabrier & Potekhin 1998 screening.
+*** NSE Conditions
+An overview of the NSE evolution schematic diagram is shown in Figure [[fig:diagram]]
+
+#+name: fig:diagram
+#+attr_html: :width 75%
+#+caption: NSE evolution schematic diagram
+[[file:nse-schematic-diagram.png]]
+
+Before using the NSE equation, a list of checks shown in Figure [[fig:diagram]]
+are conducted to ensure the current simulation cell is in NSE.
+
+**** Minimum Temperature Check
+Require
+
+$$ T > T_{min} $$
+
+Temperature of the cell must exceed a certain value, by default T_{min} = 4 \times 10^{9} K.
+Under this temperature, NSE is not expected to occur at all.
+
+**** Mass Abundance Check
+The current mass abundances should be close to the NSE mass fractions.
+Note, we currently do not introduce any methods of handling the /quasi-NSE/ state
+when transitioning from a non-NSE state to NSE state. Therefore, an abrupt change
+in the energy is expected. To avoid this
+
+   If there are proton, neutron, and Helium-4 are present in the network,
+   then define r = Y_{\alpha}/(Y_{p}^{2}Y_{n}^{2}) and r_{\mathrm{nse}} = (Y_{\alpha}/(Y_{p}^{2}Y_{n}^{2}))_{\mathrm{nse}}, and require
+
+   $$ \frac{r - r_{\mathrm{nse}}}{r_{\mathrm{nse}}} < 0.5 $$
+
+   If there are only proton and helium-4, then define
+   r = Y_{\alpha}/Y_{p}^{2} and r_{\mathrm{nse}} = (Y_{\alpha}/(Y_{p}^{2}))_{\mathrm{nse}} and require:
+
+   $$ \frac{r - r_{\mathrm{nse}}}{r_{\mathrm{nse}}} < 0.25 $$
+
+   If the check above failed, then we proceed to an overall molar fraction check:
+
+   $$ \epsilon_{\mathrm{abs}} = \sum_{i} |Y^{i} - Y^{i}_{\mathrm{nse}}| < \epsilon_{\mathrm{abs}}^{\mathrm{nse}} $$
+
+   and
+
+   $$ \epsilon_{\mathrm{rel}} = \sum_{i} \frac{\epsilon_{\mathrm{abs}} }{ Y^{i} }< \epsilon_{\mathrm{rel}}^{\mathrm{nse}} $$
+
+**** NSE Grouping Procedure
+A grouping process is performed to all the nuclei based
+on the available reaction rates.
+Based on the final grouping configuration,
+we determine whether the network is currently in NSE or not.
+***** Determine Reaction Timescale
+Determine the reaction timescale for the available reaction rates,
+which is defined as
+
+$$ t_{i,k} = \frac{Y_i}{\min(b_{f}(k), b_{r}(k))} $$
+
+where $Y_i$ is the molar fraction of the /i-th/ isotope in the reaction
+that is different from /p/, /n/, and /\alpha/. Note that due to the constraints
+we have below, there can be at most two of these nuclei in a given
+reaction. The smaller $Y_i$ is chosen.
+
+Consider the /k-th/ reaction of the following form:
+
+$$ A + B \rightleftarrows C + D $$
+
+/b_{f}(k)/ and /b_{r}(k)/ are the forward and reverse reaction rate
+of the /k-th/ reaction, which is defined as following:
+
+$$ b_{f,r}(k) = (1 + \sigma_{AB,CD}) \rho Y_{A,C} Y_{B,D} \frac{N_A <\sigma v>_{f,r}}{1 + \sigma_{AB,CD}} $$
+
+or if only single reactant or product is involved then:
+
+$$ b_{f,r}(k) = |Y_{A,C} N_A <\sigma v>_{f,r}| $$
+
+Note, some reactions are skipped during the process,
+and the timescale for these reactions are set to be largest or slowest:
+
+1. Reactions that have no reverse rates.
+2. Reactions involve more than three reactants or products involved.
+3. Reactions involve more than 2 non- /n/, /p/, and /\alpha/ in reactants
+   and products.
+
+All reaction timescales are initialized with a maximum (slowest) machine
+number. If all the criteria are satisfied above, then the reaction
+timescale is computed.
+
+Lastly, we require the forward and reverse rates are close to each other:
+
+$$ \frac{2.0 |b_f(k) - b_r(k)|}{b_f(k) + b_r(k)} < \epsilon  $$
+
+and the reaction timescale must be faster compared to the
+sound-crossing timescale:
+
+$$ t_{i,k} = \epsilon t_s $$
+
+where the sound crossing time, $t_s$ is defined as:
+
+$$ t_s = \frac{\min(\mathrm{dx}[0], \mathrm{dx}[1], \mathrm{dx}[2])}{c_s} $$
+
+where dx is the size of the simulation cell and $c_s$ is the sound speed,
+and \epsilon is chosen by the user, which is typically \sim 0.1 or 0.01.
+
+Reaction rates with all these requirements satisfied will carry out
+reaction timescales that will be used later for the grouping process.
+
+***** Initialization
+To start the grouping process, all nuclei except /p/, /n/, and /\alpha/
+initially form a group on their own.
+/p/, /n/, and /\alpha/ form a single group, called the light-isotope-group or LIG.
+
+***** Grouping Process
+Grouping process starts from the fastest reaction timescale.
+We have already filtered out reaction rates that don't satisfy the NSE
+conditions during the calculation of the reaction timescale.
+
+Here consider two cases during the grouping process:
+
+1. If there are exactly two isotopes involved in the /k-th/ reaction that are not in LIG, then merge the isotope in the smaller group into the isotop in the larger group.
+   *Note, in this case, we skip this reaction if both isotopes are*
+   *already in the same group. (Perhaps we can still merge the nonLIG group*
+   *to LIG at this point)???*
+2. If there is only 1 isotope involved in the /k-th/ reaction that is not
+   in LIG, then merge that isotope and the group that it's in into LIG
+
+***** Grouping Configuration
+A final grouping configuration is obtained after the grouping process.
+
+1. If the network has neutron, then define NSE if all the nuclei are in the single group with an optional LIG.
+2. If the network does not have neutron, then consider a looser constraint where for isotopes  $Z \geq 14$, isotopes with odd N and even N form two distinct groups.
+
+*** NSE Burn
+Once the cell is determined to be in NSE, mass fraction is determined by the NSE equation.
+However, a careful calculation is needed to determine \rho, T, and $Y_e$ of the next time step
+to accurately determine the appropriate NSE state as well as energy generation rates.
+We will proceed with a 2nd order Runge-Kutta scheme following the similar fashion described
+in this [[https://iopscience.iop.org/article/10.3847/1538-4357/ad8a66][paper]], which uses a table that stores NSE states at different theromodynamic conditions
+instead of solving the NSE state directly on the grid.
+
+During the reactive update, the quantities we want to update are
+$\rho$, $\rho \vec{U}$, $\rho e$, $\rho E$, and $\rho X_k$. They are updated with the form:
+
+$$ \boldsymbol{\mathcal{U}}^{n+1} = \boldsymbol{\mathcal{U}}^{n} + \Delta t \left([\boldsymbol{\mathcal{A}}(\boldsymbol{\mathcal{U}})]^{n+1/2} + [{\bf R}(\boldsymbol{\mathcal{U}})]^{n+1/2}\right) $$
+
+The advective contribution, $\boldsymbol{\mathcal{A}}(\boldsymbol{\mathcal{U}})$,
+is already time-centered from the simplified-SDC algorithm,
+so it comes down to evaluate the midpoint reactive source,
+$[{\bf R}(\boldsymbol{\mathcal{U}})]^{n+1/2}$. The general steps are the following:
+
+1. Compute the advective source term for $Y_e$ via:
+  $$ \boldsymbol{\mathcal{A}}(\rho Y_e) = \sum_k \frac{Z_k}{A_k} \boldsymbol{\mathcal{A}}(\rho X_k) $$
+  Note that this bit is already time-centered.
+2. Compute $[{\bf R}(\rho Y_e)]^n$ and $[{\bf R}(\rho e)_{\mathrm{nuc}}]^n$ using
+   $[\rho]^n$, $[T]^n$, $[Y_e]^n$ and $[e]^n$:
+  1. Find the NSE composition with given $[\rho]^n$, $[e]^n$,
+     and $[Y_e]^n$. An EOS inversion algorithm is used so
+     that we determine $[T^*]^n$ such that $[e]^n$ remains
+     unchanged after switching to the NSE composition.
+     Here we use $[T]^n$ as the initial guess and updated
+     to the solution, $[T^*]^n$, in the end.
+  2. Compute the thermal neutrino losses,
+     $\epsilon_{\nu,\mathrm{thermal}}$, using the NSE composition.
+  3. Evaluate $\dot{Y}_{\mathrm{weak}}$ and neutrino losses, $\epsilon_{\nu,\mathrm{react}}$,
+     from weak reactions only as they are the only contributing reactions in NSE.
+  4. Evaluate $[{\bf R}(\rho Y_e)]^n$ as:
+     $$ [{\bf R}(\rho Y_e)]^n = [\rho]^n \sum_k Z_k [\dot{Y}_{\mathrm{k, weak}}]^n $$
+  5. Evaluate $[{\bf R}(\rho e)_{\mathrm{nuc}}]^n$ as:
+     $$ [{\bf R}(\rho e)_{\mathrm{nuc}}]^n = - N_A c^2 \sum_k [\dot{Y}_{\mathrm{k, weak}}]^n m_k $$
+     where the nuclei mass, $m_k$ is defined as:
+     $$ m_k c^2 = (A_k - Z_k) m_n c^2 + Z_k (m_p + m_e) c^2 - B_k $$
+  6. The full reactive source term, $[{\bf R}(\rho e)]^n$ is then:
+     $$ [{\bf R}(\rho e)]^n = [{\bf R}(\rho e)_{\mathrm{nuc}}]^n - [\rho]^n \left(\epsilon_{\nu,\mathrm{thermal}} + \epsilon_{\nu,\mathrm{react}}\right) $$
+3. Now evolve $\rho$, $\rho e$, and $\rho Y_e$ to midpoint in time:
+   $$ \boldsymbol{\mathcal{U}}^{n+1/2} = \boldsymbol{\mathcal{U}}^{n} + \frac{\Delta t}{2} \left([\boldsymbol{\mathcal{A}}(\boldsymbol{\mathcal{U}})]^{n+1/2} + [{\bf R}(\boldsymbol{\mathcal{U}})]^{n}\right) $$
+   Note that there is no reactive source term for $\rho$ and the advective
+   source term is constant throughout the reactive update.
+4. Compute $[{\bf R}(\rho Y_e)]^{n+1/2}$ and
+   $[{\bf R}(\rho e)_{\mathrm{nuc}}]^{n+1/2}$ following the same
+   procedure as above. This time, it uses
+   $[\rho]^{n+1/2}$, $[Y_e]^{n+1/2}$ and $[e]^{n+1/2}$ as input
+   and uses the updated $[T]^n$ as initial guess for the EOS inversion
+   algorithm.
+
+Now that we obtain the midpoint reactive source term, we can
+evolve all thermodynamic quantities to new time, $t^{n+1}$ via:
+
+$$ \boldsymbol{\mathcal{U}}^{n+1} = \boldsymbol{\mathcal{U}}^{n} + \Delta t \left([\boldsymbol{\mathcal{A}}(\boldsymbol{\mathcal{U}})]^{n+1/2} + [{\bf R}(\boldsymbol{\mathcal{U}})]^{n+1/2}\right) $$
+
+Lastly, the composition is updated by finding the corresponding NSE state
+using $[\rho]^{n+1}$, $[e]^{n+1}$, and $[Y_e]^{n+1}$.
+
+*** Application: Double-Detonation
+Here we showcase the use of NSE integration in the double-detonation
+model for Type Ia Supernovae. The supernovae starts off with a surface
+helium detonation, which releases a shock wave inward to the carbon core,
+which is indicated by the density gradient. This shock wave ignites the
+carbon core releasing the carbon detonation. During carbon detonation,
+temperature can reach more than \sim 6 billion Kelvin, which is
+sufficient for the core to be in NSE.
+
+
+The movie below showcases the double-detonation, where the
+black curve in the energy generation plot maps out the outline
+at which NSE takes place. We basically see the NSE region grows
+as the second detonation propagates outward.
+#+attr_html: :width 1000 :height 600 :controls t
+#+caption: A movie showing double-detonation.
+#+begin_video
+<source src="/videos/subchandra.mp4" type="video/mp4">
+Your browser does not support the video tag.
+Videos only work in static folders.
+#+end_video
+
+** DONE Sensitivity of He Flames in X-ray Bursts to Nuclear Physics
+:PROPERTIES:
+:EXPORT_FILE_NAME: index
+:EXPORT_HUGO_BUNDLE: xrb-sensitivity
+:EXPORT_DATE: <2025-02-02 Sun>
+:EXPORT_HUGO_PUBLISHDATE:
+:EXPORT_HUGO_EXPIRYDATE:
+:EXPORT_HUGO_CUSTOM_FRONT_MATTER: :image "network_abar_50ms.png"
+:EXPORT_AUTHOR: zhi
+:EXPORT_HUGO_WEIGHT: auto
+:EXPORT_HUGO_TYPE: gallery
+:END:
+#+ATTR_HTML: :class resource-copy
+[[file:xrb-sensitivity/network_abar_50ms.png]]
+*** Introduction
+Millisecond burst oscillation phenomenon is often observed during the rise time
+of the X-ray burst light curve, where the oscillation frequency matches with the
+X-ray emission pulsation of the neutron star within few Hz.
+The modulation of asymmetrical burning on the surface of the neutron star
+due to the spreading of the initial local hotspot is the current contender theory
+that explains this behavior.
+Many have attempted to model the laterally flame propagation on the neutron star surface,
+with successes at studying the flame front and calculating the flame speed.
+In this project, I conducted a sensitivity test on how choices of nuclear reaction network,
+plasma screening routines, and integration coupling methods can influence the He flame dynamics.
+Details of the work is published in [[https://iopscience.iop.org/article/10.3847/1538-4357/acec72][ApJ]].
+*Here I'll just summarize the most important finding on the effect of nuclear reaction network
+on flame dynamics and nucleosynthesis*.
+
+*** Initial Model
+We used [[https://github.com/AMReX-Astro/Castro][Castro]], a compressible hydrodynamics simulation code freely available on GitHub, to
+perform all the simulations. Nuclear reaction burning related modules are provided via [[https://github.com/AMReX-Astro/Microphysics][Microphysics]].
+To set the stage, we assumed a typical 1.4 M_{\odot} neutron star with radius of 11 km.
+We used a relative a relatively higher \Omega = 1000 Hz to have a greater flame confinement due to
+Coriolis force so that a smaller simulation domain.
+A parallel-plane geometry with 2D axisymmetric R-Z cylindrical coordinate system is used.
+We considered a simulation domain of r = 1.843 \times 10^{5} cm and z = 3.072 \times 10^{4} cm,
+taking place on the surface of the rotating pole, where Coriolis force is the maximum.
+A coarse grid of 1152 \times 192 zones were used, corresponding to 160 cm resolution.
+With 2 extra AMR levels, there are 9216 \times 1536 zones for the finest grid, corresponding
+to a 20 cm resolution.
+A constant gravity is z is used since the mass of the accretion layer
+is negligible compared to the mass the neutron star.
+This corresponds to \sim 10^{\circ} away from the pole at the maximum extent,
+allowing us to work with a constant Coriolis force in the co-rotating frame of the neutron star.
+Initially, the fuel layer is assumed to have pure He^{4} uniformly distributed horizontally in
+an isentropic atmosphere for z > 2000 cm.
+An isothermal base layer comprised of pure Ni^{56} for z < 2000 cm to represent the transition to
+the interior of the neutron star.
+Since the model is initially in hydrostatic equilibrium, we placed a temperature perturbation profile of
+1.2 \times 10^{9} K at the base of the He^{4} layer for r < 4.096 \times 10^{4} cm to facilitate nuclear burning,
+compared to T = 2 \times 10^{8} K at the base of the He^{4} layer for r > 4.096 \times 10^{4} cm.
+Figure [[fig:init_temp]] shows the initial temperature profile on the left side of the domain.
+The total simulation time is 120 ms to prevent flame propagating outside the domain.
+
+#+name: fig:init_temp
+#+attr_html: :width 95%
+#+caption: Slice plot showing the initial temperature pertubation. Note this only shows a small fraction of the domain.
+[[file:init_temp.png]]
+
+*** Reaction Network
+Several reaction networks were used to test the sensitivity of nuclear physics
+to flame dynamics. Here we only discuss the one that is found to be most
+relevant, /subch_simple/, a network comprised of 22 isotopes and 57 rates.
+See Figure [[fig:subch_simple]] for visualizations.
+
+#+name: fig:subch_simple
+#+attr_html: :width 85%
+#+caption: A visualization that shows the /subch_simple/ network.
+[[file:subch_simple.png]]
+
+
+The classic 13-isotope \alpha-chain network from ${}^{4}\mbox{He}$ to ${}^{56}\mbox{Ni}$ , /aprox13/,
+is used as a reference network for comparison. See Figure [[fig:aprox13]] for visualizations.
+
+#+name: fig:aprox13
+#+attr_html: :width 85%
+#+caption: A visualization that shows the /aprox13/ network.
+[[file:aprox13.png]]
+
+
+The most important difference between /subch_simple/ and /aprox13/ is inclusion of the rate sequence,
+${}^{12}\mbox{C}(\mbox{p}, \gamma) {}^{13}\mbox{N}(\alpha, \mbox{p}){}^{16}\mbox{O}$.
+1D studies have shown that this rate sequence dominates over \alpha-capture process
+on ${}^{12}\mbox{C}$, ${}^{12}\mbox{C} (\alpha, \gamma) {}^{16}\mbox{O}$ for $T \gtrsim 10^9$ K,
+which is responsible for generating a burst of energy as temperature increases
+during the start of the burst.
+
+*** Results
+
+#+name: fig:abar
+#+attr_html: :width 75%
+#+caption: Slice plots showing the mean molecular weight for simulations that used different reaction network at 50 ms simulation time. A larger coverage and deeper color of the mean molecular weight for /subch_simple/ (bottom panel) indicates a much more vigorous burning process compared to /aprox13/ (top panel).
+[[file:network_abar_50ms_finesst.png]]
+
+Our 2D simulations show a general agreement with these 1D studies.
+Figure [[fig:abar]] shows the mean molecular weight, $\bar{A}$, of the flame at 50 ms
+using the two networks. Regions with a larger $\bar{A}$ represent the ashes from nuclear burning.
+Compared to /aprox13/, /subch_simple/ shows a larger coverage of ash structure,
+both vertically and horizontally, indicating much more vigorous burning and a faster flame speed.
+A darker color indicate ashes are composed of heavier nuclei suggesting much more frequent
+late-stage burning processes.
+
+
+#+name: fig:profile
+#+attr_html: :width 85%
+#+caption: Time evolution of density weighted temperature and energy generation rate of the flame. /subch_simple/ (red) shows spikes in energy generation rate (right panel) initially and at t ~ 20 ms compared to a steady increase in /aprox13/ (blue). This corresponds to the steeper increase in temperature (left panel) for t < 25 ms for /subch_simple/.
+[[file:network_time_profile_finesst.png]]
+
+
+Figure [[fig:profile]] shows the evolution of density-weighted temperature and
+$\dot{e}_{\text{nuc}}$ of the flame. Instead of a steady increase in both temperature
+and $\dot{e}_{\text{nuc}}$ in /aprox13/, /subch_simple/ shows burst of energies
+at $\sim 20$ ms and a quick fall off afterwards.
+
+#+name: fig:species
+#+attr_html: :width 90%
+#+caption: Time evolution of the total mass for C12, O16, and Si32. A depletion of C12 is observed at ~ 20 ms for /subch_simple/ (red) compared to /aprox13/ (blue), indicating a much more efficient burning for C12 is available in /subch_simple/. This leads to nucleosynthesis of heavier isotopes like Si32.
+[[file:network_species_summary_log_finesst.png]]
+
+
+To understand the behavior of this evolution trajectory,
+Figure [[fig:species]] shows the total mass evolution of ${}^{12}\mbox{C}$, ${}^{16}\mbox{O}$, and ${}^{32}\mbox{Si}$.
+In contrast to the continuous buildup of ${}^{12}\mbox{C}$  in /aprox13/
+since the network is bottle-necked by ${}^{12}\mbox{C} (\alpha, \gamma) {}^{16}\mbox{O}$,
+${}^{12}\mbox{C}(\mbox{p}, \gamma) {}^{13}\mbox{N}(\alpha, \mbox{p}){}^{16}\mbox{O}$
+opens up a new path way for fusing ${}^{16}\mbox{O}$ in /subch_simple/ at $t \sim 20$ ms with a
+corresponding $T \sim 1.3 \times 10^9$ K. At this point, nuclear burning timescale for
+${}^{12}\mbox{C}(\mbox{p}, \gamma) {}^{13}\mbox{N}(\alpha, \mbox{p}){}^{16}\mbox{O}$ is faster than
+the rate at which ${}^{12}\mbox{C}$ is produced by the triple-$\alpha$ process.
+This leads to a depletion of ${}^{12}\mbox{C}$, corresponding to the burst of energy observed in
+Figure [[fig:profile]] at $t \sim 20$ ms, as well as an early fuel exhaustion compared to /aprox13/.
+
+
+#+name: fig:front
+#+attr_html: :width 40%
+#+caption: Time evolution of the flame front position. An initial acceleration phase is observed for /subch\_simple/ (red) in contrast to a global uniform flame propagation in /aprox13/ (blue).
+[[file:network_front_finesst.png]]
+
+
+In terms of flame speed, Figure [[fig:front]] shows as initial short acceleration phase
+for /subch_simple/ following by an uniform speed of $\sim 5.0 \ \text{km} \ \text{s}^{-1}$ similar to /aprox13/.
+By extrapolating beyond the data, calculations show both models takes $\sim 1.5$ s
+to reach 30 km, roughly the distance flame needs to travel to engulf the entire star.
+This matches with the rise time of the light curve as we discussed previously.
+This study gives us the confidence that /subch_simple/ is the optimal network to use
+for the future full-star simulation, where we determine the time for the flame to
+reach maximum coverage of the star along with the influence of Coriolis force modulation
+without extrapolation.
+
+*** Summary
+
+#+attr_html: :width 1000 :height 600 :controls t
+#+caption: A movie showing He flame propagation using subch network.
+#+begin_video
+<source src="/videos/xrb-sensitivity.mp4" type="video/mp4">
+Your browser does not support the video tag.
+Videos only work in static folders.
+#+end_video
+
+All the results shown proves that ${}^{12}\mbox{C}(\mbox{p}, \gamma) {}^{13}\mbox{N}(\alpha, \mbox{p}){}^{16}\mbox{O}$
+is critical for an accurate modeling of the laterally propagating He flames in X-ray bursts
+because it changes both nucleosynthesis and flame dynamics drastically.
+Lastly, we provide a movie showing flame propagation. Three different panels
+showing temperature, $\bar{A}$, and $\dot{e}_\text{nuc}$, from top to bottom.
+
+*Please see the complete study in [[https://iopscience.iop.org/article/10.3847/1538-4357/acec72][ApJ]] for more detail.*
+
+** DONE Interferometry
+:PROPERTIES:
+:EXPORT_FILE_NAME: index
+:EXPORT_HUGO_BUNDLE: interferometry
+:EXPORT_DATE: <2025-02-02 Sun>
+:EXPORT_HUGO_PUBLISHDATE:
+:EXPORT_HUGO_EXPIRYDATE:
+:EXPORT_HUGO_CUSTOM_FRONT_MATTER: :image "interferometry_setup.png"
+:EXPORT_AUTHOR: zhi
+:EXPORT_HUGO_TYPE: gallery
+:EXPORT_TAGS:
+:EXPORT_CATEGORIES:
+:END:
+#+ATTR_HTML: :class resource-copy
+[[file:interferometry/interferometry_setup.png]]
+
+This was my research project during my [[https://science.osti.gov/wdts/suli][SULI]] internship in 2021.
+I was interested in estimating the precision of the
+[[https://astro.theoj.org/article/39641-two-photon-amplitude-interferometry-for-precision-astrometry][two-photon interferometry]] technique
+for measuring the relative separation between two light-sources (i.e. stars)
+using Markov-Chain Monte Carlos (MCMC) simulation.
+
+*** Two-photon Interferometer Overview
+
+Assume there are two sources which can be observed simultaneously from two stations,
+*L*  and *R* , with single spatial mode inputs /a/, /b/  and /e/, /f/.
+Both sources send out photons in the form of plane wave, the path length difference
+between the two stations yielding phase delays $\delta_1$ and $\delta_2$ between the photons observed
+at channels /a/, /e/ from source 1 and /b/, /f/ from source 2, respectively.
+If the two detected photons are close enough in frequency and arrival time,
+then the pattern of coincidences measured at the outputs /c/, /d/ and /g/, /h/
+will be sensitive to the difference in phase delays
+after interference at the symmetric beam splitter in each station.
+
+$$ \Delta\delta = \delta_{1} - \delta_{2} = \frac{2\pi}{\lambda} \vec{B} \cdot (\hat{s_1} - \hat{s_2}) + \psi $$
+
+where $\vec{B}$ is the baseline of the two detectors and \psi is a constant phase-shift
+due to instrumental path length difference between the two telescope.
+And here \Delta\delta encodes the relative separation between the two sources.
+
+*** Procedure of Bayesian Analysis.
+
+The analysis involves two parts:
+
+1. Simulate coincidences following Poisson process
+2. Feed the sampled data to MCMC and see if we can recover the original parameters used
+   such as visibility and the separation between two sources.
+
+**** Simulating Coincidence
+
+#+attr_html: :width 75%
+#+caption: Schematic picture the fringe pattern. The blue curve represents a theoretical fringe pattern, and orange points are events detected.
+[[file:simulated_coincidences.jpeg]]
+
+Summary:
+1. Since fringes will vary in frequency as Earth rotates, we first determine the period
+   of each fringe cycle denoted by \Delta{}t's.
+2. Determine the number of detections within each fringe cycle via $\bar{n} \times \Delta t$
+3. Determine the phase, \phi, of these events in each fringe cycle.
+4. Find the timestamp of these events corresponding to the phase, \phi.
+
+We knew the rate for different two-photon coincidence rate type (i.e. the blue curve)
+will be in the form:
+
+$$ R_{\pm}(t) = \bar{n} \left(1 \pm V \cos(\delta_1 - \delta_2) \right) $$
+
+where $\bar{n}$ is the fringed-average value of R, and /V/ is the fringe visibility calculated
+from the fluxes of the two sources. We can determine \Delta{}t's from the curve, as well as the
+number of events in each fringe cycle.
+
+Now the form of R(t) tells us that the probability density function is of the form:
+
+$$ PDF(x) = \frac{1 \pm V\cos{(x)}}{2\pi}  \quad \quad \quad  x\in[-\pi, \pi] $$
+
+and the cumulative density function (CDF) after integrating PDF from -\pi to \phi.
+
+$$ CDF(\phi) = \frac{\phi \pm V\sin{(\phi)} + \pi}{2\pi}  \quad \quad \quad  \phi\in[-\pi, \pi] $$
+
+With a random number generator following Poisson distribution, we feed a number from 0 to 1
+to CDF. By inverting the CDF, we then obtain the phase, \phi, representing a coincidence.
+After obtaining \phi for each fringe cycle,
+we can just find the corresponding timestamp corresponding to R(t).
+
+**** MCMC Sampling
+
+After simulating our data points following Poisson distribution,
+now we explore the posterior using MCMC procedure. There are 4 parameters to vary,
+visibility, /V/, separation of the two sources in the east-west direction \Delta{}d_E,
+north-south direction \Delta{}d_N, and the arbitrary phase, \psi.
+
+The result gives a bunch of triangle correlation plots showing correlation between different
+parameters.
+
+#+attr_html: :width 75%
+#+caption: Triangle correlation polots generated via the [[https://github.com/dfm/corner.py][corner]] package. The vertical dashed lines represent 2.3%, 16%, 50%, 84%, and 99.4% quantiles of the GAussian. The orange point indicate the true value of each parameter.
+[[file:ew_1as_mix_20_1.png]]
+
+*** Result
+
+In the end, I was able to show two telescopes with an effective collecting area of $\sim 2\text{m}^2$,
+we could detect fringing and measure the astrometric separation of the sources at $\sim$ 100 \micro{}as
+of precision in a few hours of observations.
+
+This work is published in [[https://journals.aps.org/prd/abstract/10.1103/PhysRevD.107.023015][Physical Review D]]
