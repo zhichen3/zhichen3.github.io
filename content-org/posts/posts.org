@@ -1,14 +1,15 @@
 #+HUGO_BASE_DIR: ../../
 #+HUGO_SECTION: posts
-* DONE posts
+* posts
 :PROPERTIES:
 :EXPORT_FILE_NAME: _index
-:EXPORT_DATE: <2025-10-02 Thu>
 :EXPORT_HUGO_PUBLISHDATE:
 :EXPORT_HUGO_EXPIRYDATE:
 :EXPORT_AUTHOR: zhi
 :EXPORT_HUGO_WEIGHT: auto
+:EXPORT_HUGO_TYPE: posts
 :END:
+
 
 * TODO GDB Tutorial                                           :gdb:@tutorial:
 :PROPERTIES:
@@ -19,6 +20,7 @@
 :EXPORT_HUGO_EXPIRYDATE:
 :EXPORT_AUTHOR: zhi
 :EXPORT_HUGO_WEIGHT: auto
+:EXPORT_HUGO_TYPE: posts
 :END:
 
 ** Commands
@@ -83,6 +85,7 @@
 :EXPORT_HUGO_EXPIRYDATE:
 :EXPORT_AUTHOR: zhi
 :EXPORT_HUGO_WEIGHT: auto
+:EXPORT_HUGO_TYPE: posts
 :END:
 
 This is my org posts...

@@ -1,6 +1,6 @@
 #+HUGO_BASE_DIR: ../../
 #+HUGO_SECTION: research
-* DONE research
+* research
 :PROPERTIES:
 :EXPORT_FILE_NAME: _index
 :EXPORT_HUGO_PUBLISHDATE:
@@ -8,6 +8,7 @@
 :EXPORT_AUTHOR: zhi
 :EXPORT_HUGO_TYPE: gallery
 :END:
+
 
 * TODO The Effect of Coriolis Force Variations on X-ray Burst Flame Dynamics
 :PROPERTIES:

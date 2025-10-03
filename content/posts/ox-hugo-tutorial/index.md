@@ -4,6 +4,7 @@ author = ["zhi"]
 date = 2025-02-20T00:00:00-05:00
 tags = ["ox-hugo"]
 categories = ["tutorial"]
+type = "posts"
 draft = false
 weight = 1003
 +++
