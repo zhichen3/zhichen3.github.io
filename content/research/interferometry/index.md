@@ -7,6 +7,8 @@ draft = false
 image = "interferometry_setup.png"
 +++
 
+{{< figure src="interferometry_setup.png" class="resource-copy" >}}
+
 This was my research project during my [SULI](https://science.osti.gov/wdts/suli) internship in 2021.
 I was interested in estimating the precision of the
 [two-photon interferometry](https://astro.theoj.org/article/39641-two-photon-amplitude-interferometry-for-precision-astrometry) technique
@@ -44,7 +46,7 @@ The analysis involves two parts:
 
 ### Simulating Coincidence {#simulating-coincidence}
 
-{{< figure src="/ox-hugo/simulated_coincidences.jpeg" caption="<span class=\"figure-number\">Figure 1: </span>Schematic picture the fringe pattern. The blue curve represents a theoretical fringe pattern, and orange points are events detected." width="75%" >}}
+{{< figure src="simulated_coincidences.jpeg" caption="<span class=\"figure-number\">Figure 1: </span>Schematic picture the fringe pattern. The blue curve represents a theoretical fringe pattern, and orange points are events detected." width="75%" >}}
 
 Summary:
 
@@ -87,7 +89,7 @@ north-south direction &Delta;d_N, and the arbitrary phase, &psi;.
 The result gives a bunch of triangle correlation plots showing correlation between different
 parameters.
 
-{{< figure src="/ox-hugo/ew_1as_mix_20_1.png" caption="<span class=\"figure-number\">Figure 2: </span>Triangle correlation polots generated via the [corner](https://github.com/dfm/corner.py) package. The vertical dashed lines represent 2.3%, 16%, 50%, 84%, and 99.4% quantiles of the GAussian. The orange point indicate the true value of each parameter." width="75%" >}}
+{{< figure src="ew_1as_mix_20_1.png" caption="<span class=\"figure-number\">Figure 2: </span>Triangle correlation polots generated via the [corner](https://github.com/dfm/corner.py) package. The vertical dashed lines represent 2.3%, 16%, 50%, 84%, and 99.4% quantiles of the GAussian. The orange point indicate the true value of each parameter." width="75%" >}}
 
 
 ## Result {#result}

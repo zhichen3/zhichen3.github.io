@@ -4,7 +4,7 @@ author = ["zhi"]
 date = 2025-02-20T00:00:00-05:00
 tags = ["ox-hugo"]
 categories = ["tutorial"]
-draft = true
+draft = false
 weight = 2002
 +++
 
@@ -19,7 +19,7 @@ Here is a hyperlink:
 
 Here is some image
 
-{{< figure src="../content/photos/arizona-us/arizona-us.jpg" caption="<span class=\"figure-number\">Figure 1: </span>this is arizona pictures" width="100%" >}}
+{{< figure src="/ox-hugo/nian1.JPG" caption="<span class=\"figure-number\">Figure 1: </span>Nian Nian raising her hand (feet)" width="100%" >}}
 
 I can also link image from other website.
 

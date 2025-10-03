@@ -8,6 +8,9 @@ weight = 2003
 image = "network_abar_50ms.png"
 +++
 
+{{< figure src="network_abar_50ms.png" class="resource-copy" >}}
+
+
 ## Introduction {#introduction}
 
 Millisecond burst oscillation phenomenon is often observed during the rise time
@@ -54,7 +57,7 @@ The total simulation time is 120 ms to prevent flame propagating outside the dom
 
 <a id="figure--fig:init-temp"></a>
 
-{{< figure src="/ox-hugo/init_temp.png" caption="<span class=\"figure-number\">Figure 1: </span>Slice plot showing the initial temperature pertubation. Note this only shows a small fraction of the domain." width="95%" >}}
+{{< figure src="init_temp.png" caption="<span class=\"figure-number\">Figure 1: </span>Slice plot showing the initial temperature pertubation. Note this only shows a small fraction of the domain." width="95%" >}}
 
 
 ## Reaction Network {#reaction-network}
@@ -66,14 +69,14 @@ See Figure [2](#figure--fig:subch-simple) for visualizations.
 
 <a id="figure--fig:subch-simple"></a>
 
-{{< figure src="/ox-hugo/subch_simple.png" caption="<span class=\"figure-number\">Figure 2: </span>A visualization that shows the _subch_simple_ network." width="85%" >}}
+{{< figure src="subch_simple.png" caption="<span class=\"figure-number\">Figure 2: </span>A visualization that shows the _subch_simple_ network." width="85%" >}}
 
 The classic 13-isotope &alpha;-chain network from \\({}^{4}\mbox{He}\\) to \\({}^{56}\mbox{Ni}\\) , _aprox13_,
 is used as a reference network for comparison. See Figure [3](#figure--fig:aprox13) for visualizations.
 
 <a id="figure--fig:aprox13"></a>
 
-{{< figure src="/ox-hugo/aprox13.png" caption="<span class=\"figure-number\">Figure 3: </span>A visualization that shows the _aprox13_ network." width="85%" >}}
+{{< figure src="aprox13.png" caption="<span class=\"figure-number\">Figure 3: </span>A visualization that shows the _aprox13_ network." width="85%" >}}
 
 The most important difference between _subch_simple_ and _aprox13_ is inclusion of the rate sequence,
 \\({}^{12}\mbox{C}(\mbox{p}, \gamma) {}^{13}\mbox{N}(\alpha, \mbox{p}){}^{16}\mbox{O}\\).
@@ -87,7 +90,7 @@ during the start of the burst.
 
 <a id="figure--fig:abar"></a>
 
-{{< figure src="/ox-hugo/network_abar_50ms_finesst.png" caption="<span class=\"figure-number\">Figure 4: </span>Slice plots showing the mean molecular weight for simulations that used different reaction network at 50 ms simulation time. A larger coverage and deeper color of the mean molecular weight for _subch_simple_ (bottom panel) indicates a much more vigorous burning process compared to _aprox13_ (top panel)." width="75%" >}}
+{{< figure src="network_abar_50ms_finesst.png" caption="<span class=\"figure-number\">Figure 4: </span>Slice plots showing the mean molecular weight for simulations that used different reaction network at 50 ms simulation time. A larger coverage and deeper color of the mean molecular weight for _subch_simple_ (bottom panel) indicates a much more vigorous burning process compared to _aprox13_ (top panel)." width="75%" >}}
 
 Our 2D simulations show a general agreement with these 1D studies.
 Figure [4](#figure--fig:abar) shows the mean molecular weight, \\(\bar{A}\\), of the flame at 50 ms
@@ -99,7 +102,7 @@ late-stage burning processes.
 
 <a id="figure--fig:profile"></a>
 
-{{< figure src="/ox-hugo/network_time_profile_finesst.png" caption="<span class=\"figure-number\">Figure 5: </span>Time evolution of density weighted temperature and energy generation rate of the flame. _subch_simple_ (red) shows spikes in energy generation rate (right panel) initially and at t ~ 20 ms compared to a steady increase in _aprox13_ (blue). This corresponds to the steeper increase in temperature (left panel) for t &lt; 25 ms for _subch_simple_." width="85%" >}}
+{{< figure src="network_time_profile_finesst.png" caption="<span class=\"figure-number\">Figure 5: </span>Time evolution of density weighted temperature and energy generation rate of the flame. _subch_simple_ (red) shows spikes in energy generation rate (right panel) initially and at t ~ 20 ms compared to a steady increase in _aprox13_ (blue). This corresponds to the steeper increase in temperature (left panel) for t &lt; 25 ms for _subch_simple_." width="85%" >}}
 
 Figure [5](#figure--fig:profile) shows the evolution of density-weighted temperature and
 \\(\dot{e}\_{\text{nuc}}\\) of the flame. Instead of a steady increase in both temperature
@@ -108,7 +111,7 @@ at \\(\sim 20\\) ms and a quick fall off afterwards.
 
 <a id="figure--fig:species"></a>
 
-{{< figure src="/ox-hugo/network_species_summary_log_finesst.png" caption="<span class=\"figure-number\">Figure 6: </span>Time evolution of the total mass for C12, O16, and Si32. A depletion of C12 is observed at ~ 20 ms for _subch_simple_ (red) compared to _aprox13_ (blue), indicating a much more efficient burning for C12 is available in _subch_simple_. This leads to nucleosynthesis of heavier isotopes like Si32." width="90%" >}}
+{{< figure src="network_species_summary_log_finesst.png" caption="<span class=\"figure-number\">Figure 6: </span>Time evolution of the total mass for C12, O16, and Si32. A depletion of C12 is observed at ~ 20 ms for _subch_simple_ (red) compared to _aprox13_ (blue), indicating a much more efficient burning for C12 is available in _subch_simple_. This leads to nucleosynthesis of heavier isotopes like Si32." width="90%" >}}
 
 To understand the behavior of this evolution trajectory,
 Figure [6](#figure--fig:species) shows the total mass evolution of \\({}^{12}\mbox{C}\\), \\({}^{16}\mbox{O}\\), and \\({}^{32}\mbox{Si}\\).
@@ -124,7 +127,7 @@ Figure [5](#figure--fig:profile) at \\(t \sim 20\\) ms, as well as an early fuel
 
 <a id="figure--fig:front"></a>
 
-{{< figure src="/ox-hugo/network_front_finesst.png" caption="<span class=\"figure-number\">Figure 7: </span>Time evolution of the flame front position. An initial acceleration phase is observed for _subch\\_simple_ (red) in contrast to a global uniform flame propagation in _aprox13_ (blue)." width="40%" >}}
+{{< figure src="network_front_finesst.png" caption="<span class=\"figure-number\">Figure 7: </span>Time evolution of the flame front position. An initial acceleration phase is observed for _subch\\_simple_ (red) in contrast to a global uniform flame propagation in _aprox13_ (blue)." width="40%" >}}
 
 In terms of flame speed, Figure [7](#figure--fig:front) shows as initial short acceleration phase
 for _subch_simple_ following by an uniform speed of \\(\sim 5.0 \ \text{km} \ \text{s}^{-1}\\) similar to _aprox13_.

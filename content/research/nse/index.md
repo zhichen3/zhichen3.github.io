@@ -8,6 +8,9 @@ weight = 2002
 image = "enuc_slice.png"
 +++
 
+{{< figure src="enuc_slice.png" class="resource-copy" >}}
+
+
 ## Introduction {#introduction}
 
 Due to the stiff nature of solving reaction equations for simulating
@@ -74,7 +77,7 @@ An overview of the NSE evolution schematic diagram is shown in Figure [1](#figur
 
 <a id="figure--fig:diagram"></a>
 
-{{< figure src="/ox-hugo/nse-schematic-diagram.png" caption="<span class=\"figure-number\">Figure 1: </span>NSE evolution schematic diagram" width="75%" >}}
+{{< figure src="nse-schematic-diagram.png" caption="<span class=\"figure-number\">Figure 1: </span>NSE evolution schematic diagram" width="75%" >}}
 
 Before using the NSE equation, a list of checks shown in Figure [1](#figure--fig:diagram)
 are conducted to ensure the current simulation cell is in NSE.
