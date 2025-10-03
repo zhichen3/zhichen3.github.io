@@ -297,5 +297,5 @@ at which NSE takes place. We basically see the NSE region grows
 as the second detonation propagates outward.
 
 <video width="1000" height="600" controls>[[file:nse/subchandra.mp4]]
-<source src="subchandra.mp4" type="video/mp4">
+<source src="/research/nse/subchandra.mp4" type="video/mp4">
 Your browser does not support the video tag.</video>

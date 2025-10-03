@@ -296,7 +296,7 @@ as the second detonation propagates outward.
 #+caption: A movie showing double-detonation.
 #+begin_video
 [[file:nse/subchandra.mp4]]
-<source src="subchandra.mp4" type="video/mp4">
+<source src="/research/nse/subchandra.mp4" type="video/mp4">
 Your browser does not support the video tag.
 #+end_video
 
@@ -456,7 +456,7 @@ without extrapolation.
 #+caption: A movie showing He flame propagation using subch network.
 #+begin_video
 [[file:xrb-sensitivity/xrb-sensitivity.mp4]]
-<source src="xrb-sensitivity.mp4" type="video/mp4">
+<source src="/research/xrb-sensitivity/xrb-sensitivity.mp4" type="video/mp4">
 Your browser does not support the video tag.
 #+end_video
 
