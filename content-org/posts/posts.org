@@ -83,7 +83,6 @@
 :EXPORT_HUGO_EXPIRYDATE:
 :EXPORT_AUTHOR: zhi
 :EXPORT_HUGO_WEIGHT: auto
-:EXPORT_HUGO_TYPE: post
 :END:
 
 This is my org posts...
