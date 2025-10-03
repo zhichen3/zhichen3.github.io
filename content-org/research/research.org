@@ -1,6 +1,6 @@
 #+HUGO_BASE_DIR: ../../
 #+HUGO_SECTION: research
-* research
+* DONE research
 :PROPERTIES:
 :EXPORT_FILE_NAME: _index
 :EXPORT_HUGO_PUBLISHDATE:

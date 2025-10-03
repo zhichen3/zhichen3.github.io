@@ -1,6 +1,6 @@
 #+HUGO_BASE_DIR: ../../
 #+HUGO_SECTION: photos
-* photos
+* DONE photos
 :PROPERTIES:
 :EXPORT_FILE_NAME: _index
 :EXPORT_HUGO_PUBLISHDATE:
@@ -9,7 +9,7 @@
 :EXPORT_HUGO_TYPE: gallery
 :END:
 
-* Mount Rainier
+* DONE Mount Rainier
 :PROPERTIES:
 :EXPORT_FILE_NAME: index
 :EXPORT_HUGO_BUNDLE: rainier

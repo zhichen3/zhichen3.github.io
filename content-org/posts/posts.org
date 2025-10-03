@@ -1,6 +1,6 @@
 #+HUGO_BASE_DIR: ../../
 #+HUGO_SECTION: posts
-* posts
+* DONE posts
 :PROPERTIES:
 :EXPORT_FILE_NAME: _index
 :EXPORT_DATE: <2025-10-02 Thu>

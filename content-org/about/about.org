@@ -1,6 +1,6 @@
 #+HUGO_BASE_DIR: ../../
 #+HUGO_SECTION: about
-* about
+* DONE about
 :PROPERTIES:
    :EXPORT_FILE_NAME: index
    :EXPORT_DATE: <2025-01-30 Thu>
