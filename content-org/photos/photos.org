@@ -40,6 +40,10 @@ It was a very pleasant hiking experience!
 [[file:rainier/DSC02559.JPG]]
 
 #+attr_html: :width 100%
+#+caption: This is Yudian. (Credit: Me)
+[[file:rainier/IMG_E9455.JPG]]
+
+#+attr_html: :width 100%
 #+caption: A selfie. (Credit: Yudian)
 [[file:rainier/DSC02570.JPG]]
 

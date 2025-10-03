@@ -29,12 +29,14 @@ It was a very pleasant hiking experience!
 
 {{< figure src="DSC02559.JPG" caption="<span class=\"figure-number\">Figure 1: </span>Bottom View. (Credit: Yudian)" width="100%" >}}
 
-{{< figure src="DSC02570.JPG" caption="<span class=\"figure-number\">Figure 2: </span>A selfie. (Credit: Yudian)" width="100%" >}}
+{{< figure src="IMG_E9455.JPG" caption="<span class=\"figure-number\">Figure 2: </span>This is Yudian. (Credit: Me)" width="100%" >}}
 
-{{< figure src="DSC02615.JPG" caption="<span class=\"figure-number\">Figure 3: </span>A squirrel! (Credit: Yudian)" width="100%" >}}
+{{< figure src="DSC02570.JPG" caption="<span class=\"figure-number\">Figure 3: </span>A selfie. (Credit: Yudian)" width="100%" >}}
 
-{{< figure src="DSC02632.JPG" caption="<span class=\"figure-number\">Figure 4: </span>Almost there! (Credit: Yudian)" width="100%" >}}
+{{< figure src="DSC02615.JPG" caption="<span class=\"figure-number\">Figure 4: </span>A squirrel! (Credit: Yudian)" width="100%" >}}
 
-{{< figure src="DSC02633.JPG" caption="<span class=\"figure-number\">Figure 5: </span>Another selfie. (Credit: Yudian)" width="100%" >}}
+{{< figure src="DSC02632.JPG" caption="<span class=\"figure-number\">Figure 5: </span>Almost there! (Credit: Yudian)" width="100%" >}}
 
-{{< figure src="DSC02637.JPG" caption="<span class=\"figure-number\">Figure 6: </span>Group Photo. (Credit: Yudian)" width="100%" >}}
+{{< figure src="DSC02633.JPG" caption="<span class=\"figure-number\">Figure 6: </span>Another selfie. (Credit: Yudian)" width="100%" >}}
+
+{{< figure src="DSC02637.JPG" caption="<span class=\"figure-number\">Figure 7: </span>Group Photo. (Credit: Yudian)" width="100%" >}}
