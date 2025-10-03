@@ -1,10 +1,18 @@
 #+HUGO_BASE_DIR: ../../
 #+HUGO_SECTION: research
-* Research
-** TODO The Effect of Coriolis Force Variations on X-ray Burst Flame Dynamics
+* research
 :PROPERTIES:
-:EXPORT_FILE_NAME: index.md
-:EXPORT_HUGO_SECTION: research/xrb-spherical
+:EXPORT_FILE_NAME: _index
+:EXPORT_HUGO_PUBLISHDATE:
+:EXPORT_HUGO_EXPIRYDATE:
+:EXPORT_AUTHOR: zhi
+:EXPORT_HUGO_TYPE: gallery
+:END:
+
+* TODO The Effect of Coriolis Force Variations on X-ray Burst Flame Dynamics
+:PROPERTIES:
+:EXPORT_FILE_NAME: index
+:EXPORT_HUGO_BUNDLE: xrb-spherical
 :EXPORT_DATE: <2025-02-02 Sun>
 :EXPORT_HUGO_PUBLISHDATE:
 :EXPORT_HUGO_EXPIRYDATE:
@@ -16,7 +24,7 @@
 
 ongoing.
 
-** DONE Adaptive Nuclear Statistical Equilibrium for Type Ia SN Simulation
+* DONE Adaptive Nuclear Statistical Equilibrium for Type Ia SN Simulation
 :PROPERTIES:
 :EXPORT_FILE_NAME: index
 :EXPORT_HUGO_BUNDLE: nse
@@ -30,7 +38,7 @@ ongoing.
 :END:
 #+ATTR_HTML: :class resource-copy
 [[file:nse/enuc_slice.png]]
-*** Introduction
+** Introduction
 Due to the stiff nature of solving reaction equations for simulating
 thermonuclear explosions, i.e. Type Ia SN and X-ray bursts, these simulations
 require careful coupling of hydrodynamics and reactions to avoid being limited
@@ -47,7 +55,7 @@ integrating a network to imposing the equilibrium during the reaction update of 
 In this work, we demonstrate the recent effort of implementing an adaptive NSE algorithm
 in Castro/Microphysics code. We will show case its viability using a 2D sub-chandrasekhar
 double-detonation progenitor model for type Ia SN.
-*** Nuclear Statistical Equilibrium
+** Nuclear Statistical Equilibrium
 Nuclear Statistical Equilibrium (NSE) is an equilibrium state of the system where the
 forward and reverse strong reactions are in chemical equilibrium.
 By imposing chemical equilibrium,
@@ -75,19 +83,19 @@ Given (\rho, T, Y_{e}), then Eq. \ref{eq:nse} can be solved with two constraints
 Therefore, we can do an algebraic solve, e.g. Hybrid-Powell method or
 Newton-Raphson method, to avoid the expensive integration.
 
-*** Network Prerequisite
+** Network Prerequisite
 Some basic prerequisite for the reaction network include:
 1. Contains a least proton and Helium-4.
 2. Mass fractions in equilibrium obtained from integration
   should match with the mass fraction obtained from NSE equations.
 3. Screening is compatible with NSE, e.g. Chabrier & Potekhin 1998 screening.
-*** NSE Conditions
+** NSE Conditions
 An overview of the NSE evolution schematic diagram is shown in Figure [[fig:diagram]]
 
 #+name: fig:diagram
 #+attr_html: :width 75%
 #+caption: NSE evolution schematic diagram
-[[file:nse-schematic-diagram.png]]
+[[file:nse/nse-schematic-diagram.png]]
 
 Before using the NSE equation, a list of checks shown in Figure [[fig:diagram]]
 are conducted to ensure the current simulation cell is in NSE.
@@ -209,7 +217,7 @@ A final grouping configuration is obtained after the grouping process.
 1. If the network has neutron, then define NSE if all the nuclei are in the single group with an optional LIG.
 2. If the network does not have neutron, then consider a looser constraint where for isotopes  $Z \geq 14$, isotopes with odd N and even N form two distinct groups.
 
-*** NSE Burn
+** NSE Burn
 Once the cell is determined to be in NSE, mass fraction is determined by the NSE equation.
 However, a careful calculation is needed to determine \rho, T, and $Y_e$ of the next time step
 to accurately determine the appropriate NSE state as well as energy generation rates.
@@ -269,7 +277,7 @@ $$ \boldsymbol{\mathcal{U}}^{n+1} = \boldsymbol{\mathcal{U}}^{n} + \Delta t \lef
 Lastly, the composition is updated by finding the corresponding NSE state
 using $[\rho]^{n+1}$, $[e]^{n+1}$, and $[Y_e]^{n+1}$.
 
-*** Application: Double-Detonation
+** Application: Double-Detonation
 Here we showcase the use of NSE integration in the double-detonation
 model for Type Ia Supernovae. The supernovae starts off with a surface
 helium detonation, which releases a shock wave inward to the carbon core,
@@ -291,7 +299,7 @@ Your browser does not support the video tag.
 Videos only work in static folders.
 #+end_video
 
-** DONE Sensitivity of He Flames in X-ray Bursts to Nuclear Physics
+* DONE Sensitivity of He Flames in X-ray Bursts to Nuclear Physics
 :PROPERTIES:
 :EXPORT_FILE_NAME: index
 :EXPORT_HUGO_BUNDLE: xrb-sensitivity
@@ -305,7 +313,7 @@ Videos only work in static folders.
 :END:
 #+ATTR_HTML: :class resource-copy
 [[file:xrb-sensitivity/network_abar_50ms.png]]
-*** Introduction
+** Introduction
 Millisecond burst oscillation phenomenon is often observed during the rise time
 of the X-ray burst light curve, where the oscillation frequency matches with the
 X-ray emission pulsation of the neutron star within few Hz.
@@ -320,7 +328,7 @@ Details of the work is published in [[https://iopscience.iop.org/article/10.3847
 *Here I'll just summarize the most important finding on the effect of nuclear reaction network
 on flame dynamics and nucleosynthesis*.
 
-*** Initial Model
+** Initial Model
 We used [[https://github.com/AMReX-Astro/Castro][Castro]], a compressible hydrodynamics simulation code freely available on GitHub, to
 perform all the simulations. Nuclear reaction burning related modules are provided via [[https://github.com/AMReX-Astro/Microphysics][Microphysics]].
 To set the stage, we assumed a typical 1.4 M_{\odot} neutron star with radius of 11 km.
@@ -349,9 +357,9 @@ The total simulation time is 120 ms to prevent flame propagating outside the dom
 #+name: fig:init_temp
 #+attr_html: :width 95%
 #+caption: Slice plot showing the initial temperature pertubation. Note this only shows a small fraction of the domain.
-[[file:init_temp.png]]
+[[file:xrb-sensitivity/init_temp.png]]
 
-*** Reaction Network
+** Reaction Network
 Several reaction networks were used to test the sensitivity of nuclear physics
 to flame dynamics. Here we only discuss the one that is found to be most
 relevant, /subch_simple/, a network comprised of 22 isotopes and 57 rates.
@@ -360,7 +368,7 @@ See Figure [[fig:subch_simple]] for visualizations.
 #+name: fig:subch_simple
 #+attr_html: :width 85%
 #+caption: A visualization that shows the /subch_simple/ network.
-[[file:subch_simple.png]]
+[[file:xrb-sensitivity/subch_simple.png]]
 
 
 The classic 13-isotope \alpha-chain network from ${}^{4}\mbox{He}$ to ${}^{56}\mbox{Ni}$ , /aprox13/,
@@ -369,7 +377,7 @@ is used as a reference network for comparison. See Figure [[fig:aprox13]] for vi
 #+name: fig:aprox13
 #+attr_html: :width 85%
 #+caption: A visualization that shows the /aprox13/ network.
-[[file:aprox13.png]]
+[[file:xrb-sensitivity/aprox13.png]]
 
 
 The most important difference between /subch_simple/ and /aprox13/ is inclusion of the rate sequence,
@@ -379,12 +387,12 @@ on ${}^{12}\mbox{C}$, ${}^{12}\mbox{C} (\alpha, \gamma) {}^{16}\mbox{O}$ for $T 
 which is responsible for generating a burst of energy as temperature increases
 during the start of the burst.
 
-*** Results
+** Results
 
 #+name: fig:abar
 #+attr_html: :width 75%
 #+caption: Slice plots showing the mean molecular weight for simulations that used different reaction network at 50 ms simulation time. A larger coverage and deeper color of the mean molecular weight for /subch_simple/ (bottom panel) indicates a much more vigorous burning process compared to /aprox13/ (top panel).
-[[file:network_abar_50ms_finesst.png]]
+[[file:xrb-sensitivity/network_abar_50ms_finesst.png]]
 
 Our 2D simulations show a general agreement with these 1D studies.
 Figure [[fig:abar]] shows the mean molecular weight, $\bar{A}$, of the flame at 50 ms
@@ -398,7 +406,7 @@ late-stage burning processes.
 #+name: fig:profile
 #+attr_html: :width 85%
 #+caption: Time evolution of density weighted temperature and energy generation rate of the flame. /subch_simple/ (red) shows spikes in energy generation rate (right panel) initially and at t ~ 20 ms compared to a steady increase in /aprox13/ (blue). This corresponds to the steeper increase in temperature (left panel) for t < 25 ms for /subch_simple/.
-[[file:network_time_profile_finesst.png]]
+[[file:xrb-sensitivity/network_time_profile_finesst.png]]
 
 
 Figure [[fig:profile]] shows the evolution of density-weighted temperature and
@@ -409,7 +417,7 @@ at $\sim 20$ ms and a quick fall off afterwards.
 #+name: fig:species
 #+attr_html: :width 90%
 #+caption: Time evolution of the total mass for C12, O16, and Si32. A depletion of C12 is observed at ~ 20 ms for /subch_simple/ (red) compared to /aprox13/ (blue), indicating a much more efficient burning for C12 is available in /subch_simple/. This leads to nucleosynthesis of heavier isotopes like Si32.
-[[file:network_species_summary_log_finesst.png]]
+[[file:xrb-sensitivity/network_species_summary_log_finesst.png]]
 
 
 To understand the behavior of this evolution trajectory,
@@ -428,7 +436,7 @@ Figure [[fig:profile]] at $t \sim 20$ ms, as well as an early fuel exhaustion co
 #+name: fig:front
 #+attr_html: :width 40%
 #+caption: Time evolution of the flame front position. An initial acceleration phase is observed for /subch\_simple/ (red) in contrast to a global uniform flame propagation in /aprox13/ (blue).
-[[file:network_front_finesst.png]]
+[[file:xrb-sensitivity/network_front_finesst.png]]
 
 
 In terms of flame speed, Figure [[fig:front]] shows as initial short acceleration phase
@@ -441,7 +449,7 @@ for the future full-star simulation, where we determine the time for the flame t
 reach maximum coverage of the star along with the influence of Coriolis force modulation
 without extrapolation.
 
-*** Summary
+** Summary
 
 #+attr_html: :width 1000 :height 600 :controls t
 #+caption: A movie showing He flame propagation using subch network.
@@ -459,7 +467,7 @@ showing temperature, $\bar{A}$, and $\dot{e}_\text{nuc}$, from top to bottom.
 
 *Please see the complete study in [[https://iopscience.iop.org/article/10.3847/1538-4357/acec72][ApJ]] for more detail.*
 
-** DONE Interferometry
+* DONE Interferometry
 :PROPERTIES:
 :EXPORT_FILE_NAME: index
 :EXPORT_HUGO_BUNDLE: interferometry
@@ -481,7 +489,7 @@ I was interested in estimating the precision of the
 for measuring the relative separation between two light-sources (i.e. stars)
 using Markov-Chain Monte Carlos (MCMC) simulation.
 
-*** Two-photon Interferometer Overview
+** Two-photon Interferometer Overview
 
 Assume there are two sources which can be observed simultaneously from two stations,
 *L*  and *R* , with single spatial mode inputs /a/, /b/  and /e/, /f/.
@@ -499,7 +507,7 @@ where $\vec{B}$ is the baseline of the two detectors and \psi is a constant phas
 due to instrumental path length difference between the two telescope.
 And here \Delta\delta encodes the relative separation between the two sources.
 
-*** Procedure of Bayesian Analysis.
+** Procedure of Bayesian Analysis.
 
 The analysis involves two parts:
 
@@ -511,7 +519,7 @@ The analysis involves two parts:
 
 #+attr_html: :width 75%
 #+caption: Schematic picture the fringe pattern. The blue curve represents a theoretical fringe pattern, and orange points are events detected.
-[[file:simulated_coincidences.jpeg]]
+[[file:interferometry/simulated_coincidences.jpeg]]
 
 Summary:
 1. Since fringes will vary in frequency as Earth rotates, we first determine the period
@@ -554,9 +562,9 @@ parameters.
 
 #+attr_html: :width 75%
 #+caption: Triangle correlation polots generated via the [[https://github.com/dfm/corner.py][corner]] package. The vertical dashed lines represent 2.3%, 16%, 50%, 84%, and 99.4% quantiles of the GAussian. The orange point indicate the true value of each parameter.
-[[file:ew_1as_mix_20_1.png]]
+[[file:interferometry/ew_1as_mix_20_1.png]]
 
-*** Result
+** Result
 
 In the end, I was able to show two telescopes with an effective collecting area of $\sim 2\text{m}^2$,
 we could detect fringing and measure the astrometric separation of the sources at $\sim$ 100 \micro{}as

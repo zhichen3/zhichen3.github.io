@@ -1,4 +1,6 @@
 +++
-title = "Research"
+title = "research"
+author = ["zhi"]
 type = "gallery"
+draft = false
 +++

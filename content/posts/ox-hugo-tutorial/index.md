@@ -4,8 +4,9 @@ author = ["zhi"]
 date = 2025-02-20T00:00:00-05:00
 tags = ["ox-hugo"]
 categories = ["tutorial"]
+type = "post"
 draft = false
-weight = 2002
+weight = 1003
 +++
 
 This is my org posts...

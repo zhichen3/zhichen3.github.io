@@ -44,7 +44,7 @@ The analysis involves two parts:
     such as visibility and the separation between two sources.
 
 
-### Simulating Coincidence {#simulating-coincidence}
+#### Simulating Coincidence {#simulating-coincidence}
 
 {{< figure src="simulated_coincidences.jpeg" caption="<span class=\"figure-number\">Figure 1: </span>Schematic picture the fringe pattern. The blue curve represents a theoretical fringe pattern, and orange points are events detected." width="75%" >}}
 
@@ -79,7 +79,7 @@ After obtaining &phi; for each fringe cycle,
 we can just find the corresponding timestamp corresponding to R(t).
 
 
-### MCMC Sampling {#mcmc-sampling}
+#### MCMC Sampling {#mcmc-sampling}
 
 After simulating our data points following Poisson distribution,
 now we explore the posterior using MCMC procedure. There are 4 parameters to vary,

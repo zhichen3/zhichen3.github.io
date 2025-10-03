@@ -4,7 +4,7 @@ author = ["zhi"]
 date = 2025-02-20T00:00:00-05:00
 type = "gallery"
 draft = false
-weight = 2002
+weight = 1003
 image = "enuc_slice.png"
 +++
 
@@ -83,7 +83,7 @@ Before using the NSE equation, a list of checks shown in Figure [1](#figure--fig
 are conducted to ensure the current simulation cell is in NSE.
 
 
-### Minimum Temperature Check {#minimum-temperature-check}
+#### Minimum Temperature Check {#minimum-temperature-check}
 
 Require
 
@@ -93,7 +93,7 @@ Temperature of the cell must exceed a certain value, by default T<sub>min</sub> 
 Under this temperature, NSE is not expected to occur at all.
 
 
-### Mass Abundance Check {#mass-abundance-check}
+#### Mass Abundance Check {#mass-abundance-check}
 
 The current mass abundances should be close to the NSE mass fractions.
 Note, we currently do not introduce any methods of handling the _quasi-NSE_ state
@@ -119,100 +119,104 @@ and
 \\[ \epsilon\_{\mathrm{rel}} = \sum\_{i} \frac{\epsilon\_{\mathrm{abs}} }{ Y^{i} }< \epsilon\_{\mathrm{rel}}^{\mathrm{nse}} \\]
 
 
-### NSE Grouping Procedure {#nse-grouping-procedure}
+#### NSE Grouping Procedure {#nse-grouping-procedure}
 
 A grouping process is performed to all the nuclei based
 on the available reaction rates.
 Based on the final grouping configuration,
 we determine whether the network is currently in NSE or not.
 
+<!--list-separator-->
 
-#### Determine Reaction Timescale {#determine-reaction-timescale}
+-  Determine Reaction Timescale
 
-Determine the reaction timescale for the available reaction rates,
-which is defined as
+    Determine the reaction timescale for the available reaction rates,
+    which is defined as
 
-\\[ t\_{i,k} = \frac{Y\_i}{\min(b\_{f}(k), b\_{r}(k))} \\]
+    \\[ t\_{i,k} = \frac{Y\_i}{\min(b\_{f}(k), b\_{r}(k))} \\]
 
-where \\(Y\_i\\) is the molar fraction of the _i-th_ isotope in the reaction
-that is different from _p_, _n_, and _&alpha;_. Note that due to the constraints
-we have below, there can be at most two of these nuclei in a given
-reaction. The smaller \\(Y\_i\\) is chosen.
+    where \\(Y\_i\\) is the molar fraction of the _i-th_ isotope in the reaction
+    that is different from _p_, _n_, and _&alpha;_. Note that due to the constraints
+    we have below, there can be at most two of these nuclei in a given
+    reaction. The smaller \\(Y\_i\\) is chosen.
 
-Consider the _k-th_ reaction of the following form:
+    Consider the _k-th_ reaction of the following form:
 
-\\[ A + B \rightleftarrows C + D \\]
+    \\[ A + B \rightleftarrows C + D \\]
 
-_b<sub>f</sub>(k)_ and _b<sub>r</sub>(k)_ are the forward and reverse reaction rate
-of the _k-th_ reaction, which is defined as following:
+    _b<sub>f</sub>(k)_ and _b<sub>r</sub>(k)_ are the forward and reverse reaction rate
+    of the _k-th_ reaction, which is defined as following:
 
-\\[ b\_{f,r}(k) = (1 + \sigma\_{AB,CD}) \rho Y\_{A,C} Y\_{B,D} \frac{N\_A <\sigma v>\_{f,r}}{1 + \sigma\_{AB,CD}} \\]
+    \\[ b\_{f,r}(k) = (1 + \sigma\_{AB,CD}) \rho Y\_{A,C} Y\_{B,D} \frac{N\_A <\sigma v>\_{f,r}}{1 + \sigma\_{AB,CD}} \\]
 
-or if only single reactant or product is involved then:
+    or if only single reactant or product is involved then:
 
-\\[ b\_{f,r}(k) = |Y\_{A,C} N\_A <\sigma v>\_{f,r}| \\]
+    \\[ b\_{f,r}(k) = |Y\_{A,C} N\_A <\sigma v>\_{f,r}| \\]
 
-Note, some reactions are skipped during the process,
-and the timescale for these reactions are set to be largest or slowest:
+    Note, some reactions are skipped during the process,
+    and the timescale for these reactions are set to be largest or slowest:
 
-1.  Reactions that have no reverse rates.
-2.  Reactions involve more than three reactants or products involved.
-3.  Reactions involve more than 2 non- _n_, _p_, and _&alpha;_ in reactants
-    and products.
+    1.  Reactions that have no reverse rates.
+    2.  Reactions involve more than three reactants or products involved.
+    3.  Reactions involve more than 2 non- _n_, _p_, and _&alpha;_ in reactants
+        and products.
 
-All reaction timescales are initialized with a maximum (slowest) machine
-number. If all the criteria are satisfied above, then the reaction
-timescale is computed.
+    All reaction timescales are initialized with a maximum (slowest) machine
+    number. If all the criteria are satisfied above, then the reaction
+    timescale is computed.
 
-Lastly, we require the forward and reverse rates are close to each other:
+    Lastly, we require the forward and reverse rates are close to each other:
 
-\\[ \frac{2.0 |b\_f(k) - b\_r(k)|}{b\_f(k) + b\_r(k)} < \epsilon  \\]
+    \\[ \frac{2.0 |b\_f(k) - b\_r(k)|}{b\_f(k) + b\_r(k)} < \epsilon  \\]
 
-and the reaction timescale must be faster compared to the
-sound-crossing timescale:
+    and the reaction timescale must be faster compared to the
+    sound-crossing timescale:
 
-\\[ t\_{i,k} = \epsilon t\_s \\]
+    \\[ t\_{i,k} = \epsilon t\_s \\]
 
-where the sound crossing time, \\(t\_s\\) is defined as:
+    where the sound crossing time, \\(t\_s\\) is defined as:
 
-\\[ t\_s = \frac{\min(\mathrm{dx}[0], \mathrm{dx}[1], \mathrm{dx}[2])}{c\_s} \\]
+    \\[ t\_s = \frac{\min(\mathrm{dx}[0], \mathrm{dx}[1], \mathrm{dx}[2])}{c\_s} \\]
 
-where dx is the size of the simulation cell and \\(c\_s\\) is the sound speed,
-and &epsilon; is chosen by the user, which is typically &sim; 0.1 or 0.01.
+    where dx is the size of the simulation cell and \\(c\_s\\) is the sound speed,
+    and &epsilon; is chosen by the user, which is typically &sim; 0.1 or 0.01.
 
-Reaction rates with all these requirements satisfied will carry out
-reaction timescales that will be used later for the grouping process.
+    Reaction rates with all these requirements satisfied will carry out
+    reaction timescales that will be used later for the grouping process.
 
+<!--list-separator-->
 
-#### Initialization {#initialization}
+-  Initialization
 
-To start the grouping process, all nuclei except _p_, _n_, and _&alpha;_
-initially form a group on their own.
-_p_, _n_, and _&alpha;_ form a single group, called the light-isotope-group or LIG.
+    To start the grouping process, all nuclei except _p_, _n_, and _&alpha;_
+    initially form a group on their own.
+    _p_, _n_, and _&alpha;_ form a single group, called the light-isotope-group or LIG.
 
+<!--list-separator-->
 
-#### Grouping Process {#grouping-process}
+-  Grouping Process
 
-Grouping process starts from the fastest reaction timescale.
-We have already filtered out reaction rates that don't satisfy the NSE
-conditions during the calculation of the reaction timescale.
+    Grouping process starts from the fastest reaction timescale.
+    We have already filtered out reaction rates that don't satisfy the NSE
+    conditions during the calculation of the reaction timescale.
 
-Here consider two cases during the grouping process:
+    Here consider two cases during the grouping process:
 
-1.  If there are exactly two isotopes involved in the _k-th_ reaction that are not in LIG, then merge the isotope in the smaller group into the isotop in the larger group.
-    **Note, in this case, we skip this reaction if both isotopes are**
-    **already in the same group. (Perhaps we can still merge the nonLIG group**
-    **to LIG at this point)???**
-2.  If there is only 1 isotope involved in the _k-th_ reaction that is not
-    in LIG, then merge that isotope and the group that it's in into LIG
+    1.  If there are exactly two isotopes involved in the _k-th_ reaction that are not in LIG, then merge the isotope in the smaller group into the isotop in the larger group.
+        **Note, in this case, we skip this reaction if both isotopes are**
+        **already in the same group. (Perhaps we can still merge the nonLIG group**
+        **to LIG at this point)???**
+    2.  If there is only 1 isotope involved in the _k-th_ reaction that is not
+        in LIG, then merge that isotope and the group that it's in into LIG
 
+<!--list-separator-->
 
-#### Grouping Configuration {#grouping-configuration}
+-  Grouping Configuration
 
-A final grouping configuration is obtained after the grouping process.
+    A final grouping configuration is obtained after the grouping process.
 
-1.  If the network has neutron, then define NSE if all the nuclei are in the single group with an optional LIG.
-2.  If the network does not have neutron, then consider a looser constraint where for isotopes  \\(Z \geq 14\\), isotopes with odd N and even N form two distinct groups.
+    1.  If the network has neutron, then define NSE if all the nuclei are in the single group with an optional LIG.
+    2.  If the network does not have neutron, then consider a looser constraint where for isotopes  \\(Z \geq 14\\), isotopes with odd N and even N form two distinct groups.
 
 
 ## NSE Burn {#nse-burn}

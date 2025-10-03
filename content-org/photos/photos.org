@@ -1,7 +1,15 @@
 #+HUGO_BASE_DIR: ../../
 #+HUGO_SECTION: photos
-* Photos
-** Mount Rainier
+* photos
+:PROPERTIES:
+:EXPORT_FILE_NAME: _index
+:EXPORT_HUGO_PUBLISHDATE:
+:EXPORT_HUGO_EXPIRYDATE:
+:EXPORT_AUTHOR: zhi
+:EXPORT_HUGO_TYPE: gallery
+:END:
+
+* Mount Rainier
 :PROPERTIES:
 :EXPORT_FILE_NAME: index
 :EXPORT_HUGO_BUNDLE: rainier
@@ -15,17 +23,17 @@
 :END:
 #+ATTR_HTML: :class resource-copy
 [[file:rainier/mount_rainier.JPG]]
-*** Background
+** Background
 [[https://en.wikipedia.org/wiki/Mount_Rainier][Mount Rainier]], also known as *Tahoma*, is a large active stratovolcano
 in the Cascade Range of the Pacific Northwest in the United States.
 The mountain is located in Mount Rainier National Park in Seattle.
 
-*** Story
+** Story
 I travelled there with my partner and friends
 after I passing my Ph.D. Oral Exam (thesis proposal).
 It was a very pleasant hiking experience!
 
-*** More photos
+** More photos
 #+attr_html: :width 100%
 #+caption: Bottom View. (Credit: Yudian)
 [[file:rainier/DSC02559.JPG]]

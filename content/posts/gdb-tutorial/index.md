@@ -5,7 +5,7 @@ date = 2025-02-20T00:00:00-05:00
 tags = ["gdb"]
 categories = ["tutorial"]
 draft = true
-weight = 2001
+weight = 1002
 +++
 
 ## Commands {#commands}

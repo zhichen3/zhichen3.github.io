@@ -1,7 +1,16 @@
 #+HUGO_BASE_DIR: ../../
 #+HUGO_SECTION: posts
-* Posts
-** TODO GDB Tutorial                                         :gdb:@tutorial:
+* posts
+:PROPERTIES:
+:EXPORT_FILE_NAME: _index
+:EXPORT_DATE: <2025-10-02 Thu>
+:EXPORT_HUGO_PUBLISHDATE:
+:EXPORT_HUGO_EXPIRYDATE:
+:EXPORT_AUTHOR: zhi
+:EXPORT_HUGO_WEIGHT: auto
+:END:
+
+* TODO GDB Tutorial                                           :gdb:@tutorial:
 :PROPERTIES:
 :EXPORT_FILE_NAME: index
 :EXPORT_HUGO_BUNDLE: gdb-tutorial
@@ -12,7 +21,7 @@
 :EXPORT_HUGO_WEIGHT: auto
 :END:
 
-*** Commands
+** Commands
 - *run*: run the entire program from the beginning. Do `run arg1 arg2 ...`
 
 - *break*: set a break point at a specific line of the program.
@@ -65,7 +74,7 @@
 - *set var*: changes the value of the variable. Needs the variable
   name after var.
 
-** DONE ox-hugo Tutorial                                 :ox_hugo:@tutorial:
+* DONE ox-hugo Tutorial                                   :ox_hugo:@tutorial:
 :PROPERTIES:
 :EXPORT_FILE_NAME: index
 :EXPORT_HUGO_BUNDLE: ox-hugo-tutorial
@@ -74,6 +83,7 @@
 :EXPORT_HUGO_EXPIRYDATE:
 :EXPORT_AUTHOR: zhi
 :EXPORT_HUGO_WEIGHT: auto
+:EXPORT_HUGO_TYPE: post
 :END:
 
 This is my org posts...
@@ -97,7 +107,7 @@ I can also link image from other website.
 #+caption: this is image from wikipedia
 [[https://user-images.githubusercontent.com/21258296/114303440-bfc0ae80-9aeb-11eb-8cfa-48a4bb385a6d.png]]
 
-*** This is a heading
+** This is a heading
 I have other stuff here
 
 I can have *bold text*, /italic text/, +crossout text+, and ~highlight text~.
