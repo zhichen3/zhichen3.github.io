@@ -18,7 +18,7 @@
     {{ range first 3 (sort .Data.Pages "Date" "desc" (where .Pages ".Params.private" "!=" true))}}
         <div class="post">
             <p>
-                <div class="date">{{ .PublishDate.Format "Jan. 2, 2006" }}</div>
+                <div class="date">{{ .Date | time.Format ":date_medium" }}</div>
                 <h1><a href="{{ .Permalink }}" title="{{ .Title }}">{{ .Title }}</a></h1>
                 {{ .Summary }}
             </p>
