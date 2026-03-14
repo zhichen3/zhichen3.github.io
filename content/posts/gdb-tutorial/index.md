@@ -1,15 +1,65 @@
 +++
 title = "GDB Tutorial"
 author = ["zhi"]
-date = 2025-02-20T00:00:00-05:00
+date = 2026-01-17T00:00:00-05:00
 tags = ["gdb"]
 categories = ["tutorial"]
 type = "posts"
-draft = true
+draft = false
 weight = 1002
 +++
 
+[GDB](https://www.sourceware.org/gdb/), the GNU Project debugger, is a useful debugger for many
+languages (C, C++, Fortran, etc). Here I keep a set of useful
+commands for my records.
+
+
+## Using GDB {#using-gdb}
+
+To use GDB, compile the program with debugging information.
+For standard C++ program, add `-g` flag when compiling, i.e.
+something like
+
+```bash
+g++ -g -o myprogram myprogram.cpp
+```
+
+For `AMReX` related application codes like `Castro`, compile with
+`DEBUG=TRUE`, i.e.
+
+```bash
+make DEBUG=TRUE
+```
+
+Now launch GDB with compiled program as the following.
+
+```bash
+gdb myprogram
+```
+
+Now inside gdb, set breakpoints to tell GDB where to pause.
+You can either set by line number of function name
+
+```nil
+(gdb) break main         # Break at the beginning of the main function
+(gdb) break 42           # Break at line 42
+(gdb) break file.cpp:55  # Break at line 55 of a specific file
+```
+
+Now run the program via `run` command. If the program needs command-line
+arguments, pass them after `run`, i.e. `inputs` in this case.
+
+```nil
+(gdb) run inputs
+```
+
+The program should stop at your breakpoints, use commands like `print` to
+debug.
+
+
 ## Commands {#commands}
+
+Here are a set of useful commands that I keep track of:
 
 -   **run**: run the entire program from the beginning. Do \`run arg1 arg2 ...\`
 

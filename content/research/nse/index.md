@@ -154,12 +154,13 @@ we determine whether the network is currently in NSE or not.
     \\[ b\_{f,r}(k) = |Y\_{A,C} N\_A <\sigma v>\_{f,r}| \\]
 
     Note, some reactions are skipped during the process,
-    and the timescale for these reactions are set to be largest or slowest:
+    and the timescale for these reactions are set to be largest or slowest.
+    The filtering criteria are the following:
 
-    1.  Reactions that have no reverse rates.
-    2.  Reactions involve more than three reactants or products involved.
-    3.  Reactions involve more than 2 non- _n_, _p_, and _&alpha;_ in reactants
-        and products.
+    1.  Must have a reverse rate (RatePairs only)
+    2.  Excludes weak or removed rates
+    3.  At most 2 reactants and 2 products (except for triple-alpha)
+    4.  Only 1 or 2 nuclei not in {_p_, _n_, _He4_} across reactants + products
 
     All reaction timescales are initialized with a maximum (slowest) machine
     number. If all the criteria are satisfied above, then the reaction
@@ -202,11 +203,8 @@ we determine whether the network is currently in NSE or not.
 
     Here consider two cases during the grouping process:
 
-    1.  If there are exactly two isotopes involved in the _k-th_ reaction that are not in LIG, then merge the isotope in the smaller group into the isotop in the larger group.
-        **Note, in this case, we skip this reaction if both isotopes are**
-        **already in the same group. (Perhaps we can still merge the nonLIG group**
-        **to LIG at this point)???**
-    2.  If there is only 1 isotope involved in the _k-th_ reaction that is not
+    1.  If there are exactly two isotopes involved in the _k-th_ reaction that are not in LIG, and if they're not in the same group then merge the isotope in the smaller group into the isotop in the larger group.
+    2.  If there is only 1 group involved in the _k-th_ reaction that is not
         in LIG, then merge that isotope and the group that it's in into LIG
 
 <!--list-separator-->

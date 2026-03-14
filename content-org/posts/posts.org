@@ -11,11 +11,11 @@
 :END:
 
 
-* TODO GDB Tutorial                                           :gdb:@tutorial:
+* DONE GDB Tutorial                                           :gdb:@tutorial:
 :PROPERTIES:
 :EXPORT_FILE_NAME: index
 :EXPORT_HUGO_BUNDLE: gdb-tutorial
-:EXPORT_DATE: <2025-02-20 Thu>
+:EXPORT_DATE: <2026-01-17 Sat>
 :EXPORT_HUGO_PUBLISHDATE:
 :EXPORT_HUGO_EXPIRYDATE:
 :EXPORT_AUTHOR: zhi
@@ -23,7 +23,54 @@
 :EXPORT_HUGO_TYPE: posts
 :END:
 
+[[https://www.sourceware.org/gdb/][GDB]], the GNU Project debugger, is a useful debugger for many
+languages (C, C++, Fortran, etc). Here I keep a set of useful
+commands for my records.
+
+** Using GDB
+To use GDB, compile the program with debugging information.
+For standard C++ program, add =-g= flag when compiling, i.e.
+something like
+
+#+begin_src bash
+  g++ -g -o myprogram myprogram.cpp
+#+end_src
+
+For =AMReX= related application codes like =Castro=, compile with
+=DEBUG=TRUE=, i.e.
+
+#+begin_src bash
+  make DEBUG=TRUE
+#+end_src
+
+Now launch GDB with compiled program as the following.
+
+#+begin_src bash
+  gdb myprogram
+#+end_src
+
+Now inside gdb, set breakpoints to tell GDB where to pause.
+You can either set by line number of function name
+
+#+begin_src
+(gdb) break main         # Break at the beginning of the main function
+(gdb) break 42           # Break at line 42
+(gdb) break file.cpp:55  # Break at line 55 of a specific file
+#+end_src
+
+Now run the program via =run= command. If the program needs command-line
+arguments, pass them after =run=, i.e. =inputs= in this case.
+
+#+begin_src
+  (gdb) run inputs
+#+end_src
+
+The program should stop at your breakpoints, use commands like =print= to
+debug.
+
 ** Commands
+Here are a set of useful commands that I keep track of:
+
 - *run*: run the entire program from the beginning. Do `run arg1 arg2 ...`
 
 - *break*: set a break point at a specific line of the program.
@@ -76,11 +123,11 @@
 - *set var*: changes the value of the variable. Needs the variable
   name after var.
 
-* DONE ox-hugo Tutorial                                   :ox_hugo:@tutorial:
+* DONE Using ox-Hugo                                         :ox_hugo:@tutorial:
 :PROPERTIES:
 :EXPORT_FILE_NAME: index
 :EXPORT_HUGO_BUNDLE: ox-hugo-tutorial
-:EXPORT_DATE: <2025-02-20 Thu>
+:EXPORT_DATE: <2026-01-17 Sat>
 :EXPORT_HUGO_PUBLISHDATE:
 :EXPORT_HUGO_EXPIRYDATE:
 :EXPORT_AUTHOR: zhi
@@ -88,28 +135,365 @@
 :EXPORT_HUGO_TYPE: posts
 :END:
 
-This is my org posts...
+[[https://gohugo.io/][Hugo]] is a static website generator written with GO, providing easily
+capability to convert *markdown* files into a *website*. For those who use
+[[https://www.gnu.org/software/emacs/][emacs]] [[https://orgmode.org/][Org mode]], one can use [[https://ox-hugo.scripter.co/][ox-hugo]] to convert Org files into markdown files
+that will be compatible with Hugo. Hence the workflow is:
 
-Here is some equations:
+$$\mathrm{Org} \\ \xrightarrow{\text{ox-hugo}} \\ \mathrm{markdown} \\ \xrightarrow{\text{Hugo}}  \\ \mathrm{HTML}$$
 
-$$ E = mc^2 $$
+For me, I use it to create my research journal and personal website.
 
-Here is a hyperlink:
-[[https://www.wikipedia.org/][wiki]]
+Here I describe different ways of writing things *in Org mode* that can be
+re-interpreted by =ox-hugo= to generate the corresponding =md= files that
+can be used by =Hugo= for my own records.
 
-Here is some image
+** Setup
+There are two types of [[https://ox-hugo.scripter.co/doc/blogging-flow/][blogging workflow]] using =ox-hugo=.
+
+1. One Org file per post
+2. One Org subtree per post
+
+It is generally preferred to do it the second way,
+i.e. use one Org file for multiple posts where we have
+one Org subtree per post.
+
+Now =Hugo= introduces the idea of [[https://gohugo.io/content-management/page-bundles/][page bundles]] for better content management.
+There are two types:
+
+1. leaf bundle: uses the name /index.md/ to store the text
+2. branch bundle: ues the name /_index.md/ to store the text
+
+See [[https://ox-hugo.scripter.co/doc/hugo-bundle/][here]] to see how =ox-hugo= exports files as bundles.
+
+My personal workflow is to use branch bundle as /sections/ and leaf bundle for
+specific entries. For example, my typical structure goes like:
+
+#+begin_src
+  content-org/
+  ├── posts/
+  │   ├── _index.md
+  │   ├── post1/
+  │   │   ├── index.md
+  │   │   └── img1.png
+  │   └── post2/
+  │       ├── index.md
+  │       └── img2.png
+  └── about/
+      └── _index.md
+#+end_src
+
+where I use branch bundle, using /_index.md/, to symbolize a section.
+And then use leaf bundles, using /index.md/, for each individual post.
+
+** Typographical Emphasis and Horizontal Line
+Different text formatting are available
+1. *bold text* via =* *=
+2. /italic text/ via =/ /=
+3. +crossout text+ via =+ +=
+4. =highlight text= via =~ ~= or == ==
+
+A horizontal line can be created for formatting via
+5 consecutive dashes.
+
+#+begin_src
+  -----
+#+end_src
+
+which looks like
+
+-----
+
+** Footnote
+You can create footnotes via the same [[https://orgmode.org/manual/Creating-Footnotes.html][Org-mode]] syntax.
+Put the footnote as =[fn:#]= where # is the footnote number.
+Then create the definition of footnote separately via
+=[fn:#] footnote definition=[fn:1]
+
+[fn:1] The footnote definition appears at the bottom of the page.
+
+** Quotes and Code
+You can create a quote block via
+
+#+begin_src
+  #+begin_quote
+  This is a greate quote by me.
+
+    -- Me
+  #+end_quote
+#+end_src
+
+which looks like
+
+#+begin_quote
+This is a greate quote by me.
+
+    -- Me
+#+end_quote
+
+You can also create code blocks via
+
+#+begin_src
+  #+begin_src language
+  Some language code
+  #+end_src
+#+end_src
+
+For example python, we can do
+
+#+begin_src python
+  import numpy as np
+
+  class Cat:
+      def __init__(self, name, numWhiskers, weight):
+          self.name = name
+          self.numWhiskers = numWhiskers
+          self.weight = weight
+
+      def talk(self):
+          print("Meow!")
+
+  myCat = Cat("Nian", 20, 10)
+  myCat.talk()
+#+end_src
+
+** Hyperlink and Online Image
+
+See [[https://ox-hugo.scripter.co/doc/image-links/][here]] for more information.
+
+=ox-hugo= converts hyperlinks using the standard
+[[https://orgmode.org/guide/Hyperlinks.html][Org mode hyperlink syntax]]:
+
+#+begin_src
+  [[LINK][DESCRIPTION]]
+#+end_src
+
+The =DESCRIPTION= part is optional.
+If it is omitted, the =LINK= itself is displayed on the website.
+If both =LINK= and =DESCRIPTION= are provided, the website displays
+=DESCRIPTION=, and clicking on it navigates to =LINK=.
+The =DESCRIPTION= can be plain text or an image.
+
+For example, here is a hyperlinked text to [[https://www.wikipedia.org/][wikipedia]].
+
+To display image on the website, we typically want to format it somehow.
+The common syntax are the following:
+
+#+begin_src
+  #+NAME: IMG_NAME
+  #+ATTR_HTML: :width 100%
+  #+CAPTION: Here is a caption
+  [[IMG_LINK][DISPLAY_IMG_LINK]]
+#+end_src
+
+=#+NAME= is the name used to reference the image via =[[IMG_NAME]]=.
+=#+ATTR_HTML= sets the attributes for html. See [[https://orgmode.org/worg/org-tutorials/images-and-xhtml-export.html][here]] for more info.
+And the main one to use is =:width=, which controls the width of the
+image displayed. Lastly we have =#+CAPTION=, which writes the caption
+under the displayed image. Again, =DISPLAY_IMG_LINK= is optional,
+and if it is omitted, image from =IMG_LINK= gets displayed.
+If it is not omitted, then the website shows image from =DISPLAY_IMG_LINK=,
+and clicking on it navigates to =IMG_LINK=.
+
+For example, Figure [[fig:carina]] is an image via an external link.
+
+#+name: fig:carina
+#+attr_html: :width 100%
+#+caption: Carina Nebula by James Webb Telescope
+[[https://cdn.esawebb.org/archives/images/wallpaper4/weic2205a.jpg]]
+
+Figure [[fig:pillar]] is where both =IMG_LINK= and =DISPLAY_IMG_LINK= are
+set to the external image link. Hence clicking on this image
+navigates to the original website.
+
+#+name: fig:pillar
+#+attr_html: :width 100%
+#+caption: Pillar of Creation by James Webb Telescope
+[[https://cdn.esawebb.org/archives/images/wallpaper5/pillarsofcreation_composite.jpg][https://cdn.esawebb.org/archives/images/wallpaper5/pillarsofcreation_composite.jpg]]
+
+** Local Images and Videos
+
+We often want to display local images instead of online images.
+Hence we need to link the local images.
+Let's first discuss how =Hugo= handles it, and then talk about
+how =ox-hugo= can be integrated into the workflow along with Org mode.
+
+=Hugo= generally has two options for storing images that will
+be accessible and linked by =md= files stored in =content/=.
+See [[https://github.com/gohugoio/hugo/issues/1240#issuecomment-753077529][here]] for some good explanation.
+
+1. Store all images in =static/= directory.
+2. Use [[https://gohugo.io/content-management/page-bundles/#leaf-bundles][leaf bundles]] and store images within the directory that contains
+   the =index.md= that links the images.
+
+By default, the html files that =Hugo= generates live in the =public/=
+directory, and that serves as the root directory.
+=Hugo= also copies all subdirectories that lives in =static/= to
+=public/=, so the /conventional/ way of storing images is to
+store them in =static/=, or perhaps create a subdirectory, say =images/=
+and put images there. Suppose the =Hugo= base directory is named as /hugo/,
+then the structure goes like
+
+#+begin_src
+  hugo/
+  ├── other subdirs
+  └── static/
+      └── images/
+          └── img1.png
+#+end_src
+
+Then the image can be accessed via the following (see [[https://ox-hugo.scripter.co/doc/image-links/#references-to-files-in-the-static-directory][here]] for more information),
+which is to basically access via /absolute path/ after the website is built,
+where it is assumed that the =public/= directory acts as the /root directory/ for
+the website.
+
+#+begin_src
+  [[/images/img1.png]]
+#+end_src
+
+i.e.
+
+#+caption: This is Nian Nian
+#+attr_html: :width 50%
+[[file:/images/nian.jpg]]
+
+This has two major downsides:
+
+1. Images for every posts lives here. You can imagine it being difficult to manage.
+   Although you can create subdirectories to hold images for each post.
+2. For Org mode users who uses ox-hugo, the hyperlinked image cannot be opened
+   or accessed within the org file. This is because the link is neither a valid
+   absolute link nor relative to where org file lives.
+
+Now the second way of accessing images, using [[https://gohugo.io/content-management/page-bundles/#leaf-bundles][leaf bundles]] is my preferred way.
+A /leaf bundle/ is basically a post that uses the name /index.md/ to store the text.
+Now we can store images in the same directory as /index.md/ and then we will be
+able to access it via /relative link/.
+
+For example, if the structure goes like:
+
+#+begin_src
+  hugo/
+  ├── other subdirs
+  └── content/
+      └── posts/
+          └── post1/
+              └── index.md
+              └── img1.png
+#+end_src
+
+Then we can access it in /index.md/ via
+
+#+begin_src
+  ![image](img1.png)
+#+end_src
+
+However, for Org mode users, we typically only want to work with =content-org/=
+directory, and have =ox-hugo= to auto generate everything to =content/=.
+This means that we wish to work with a structure like:
+
+#+begin_src
+  hugo/
+  ├── other subdirs
+  ├── content
+  └── content-org/
+      └── posts/
+          └── post.org
+          └── post1/
+              └── img1.png
+#+end_src
+
+where =post.org= holds all possible post entries. Suppose that we have
+a single post named as =post1=, and it uses image =img1.png=. Now we can access
+this image in the Org file using the relative link.
+
+#+begin_src
+  [[file:post1/img1.png]]
+#+end_src
+
+However, =Hugo= won't recognize this since =img1.png= does not belong to the same
+directory as /index.md/ which will be auto generated by =ox-hugo=.
+To solve this issue, =ox-hugo= has a unique feature which will auto copy local attachments
+with extensions listed in =org-hugo-external-file-extensions-allowed-for-copying=.
+(see [[https://ox-hugo.scripter.co/doc/images-in-content/][here]] for more information).
+For example, I have
+
+#+begin_src elisp
+  (setq org-hugo-external-file-extensions-allowed-for-copying
+      '("JPG" "PNG" "JPEG" "GIF" "SVG" "PDF" "MP4"
+        "jpg" "png" "jpeg" "gif" "svg" "pdf" "mp4"))
+#+end_src
+
+Now if the Org post is /leaf bundle/, i.e. for the Org subtree,
+we set the output file name to be /index.md/ and set the directory where
+the bundle lives, i.e. /post1/.
+
+#+begin_src
+  :EXPORT_FILE_NAME: index
+  :EXPORT_HUGO_BUNDLE: post1
+#+end_src
+
+Now we can simply reference the image as following,
+and =img1.png= will then be auto-copied to =content/post/post1/img1.png=.
+
+#+begin_src
+  [[file:post1/img1.png]]
+#+end_src
+
+i.e.
 
 #+caption: Nian Nian raising her hand (feet)
-#+attr_html: :width 100%
+#+attr_html: :width 50%
 [[file:ox-hugo-tutorial/nian1.JPG]]
 
-I can also link image from other website.
 
-#+attr_html: :width 100%
-#+caption: this is image from wikipedia
-[[https://user-images.githubusercontent.com/21258296/114303440-bfc0ae80-9aeb-11eb-8cfa-48a4bb385a6d.png]]
+*Note* that using the prefix =file:= is needed to use local
+link for =DISPLAY_IMG_LINK= for local image files in order
+to properly display the image. It is optional for =IMG_LINK=
+but it doesn't hurt. So generally speaking, always start
+your local image link with =file:=.
 
-** This is a heading
-I have other stuff here
+** Math Expressions and LaTeX
 
-I can have *bold text*, /italic text/, +crossout text+, and ~highlight text~.
+There are different ways to write math expressions. See [[https://ox-hugo.scripter.co/doc/equations/][here]] for more info.
+
+1. *Inline math* via =$ EXPRESSION $=, e.g. $ e=mc^2$
+2. *Math block* via =$$ EXPRESSION $$=, e.g.
+   $$ i\hbar \frac{\partial}{\partial t} \Psi(\mathbf{r}, t) = \hat{H} \Psi(\mathbf{r}, t) $$
+3. Math block via *LaTex*:
+
+   #+begin_src latex
+     \begin{equation}
+       \label{eq:euler} \tag{1}
+       \frac{\partial }{\partial t}\left( \rho \vec{U} \right) + \nabla \cdot \left(\rho \vec{U} \otimes \vec{U} \right) + \nabla p = 0
+     \end{equation}
+   #+end_src
+
+   producing:
+\begin{equation}
+\label{eq:euler}
+\frac{\partial}{\partial t}\left( \rho \vec{U} \right) + \nabla \cdot \left(\rho \vec{U} \otimes \vec{U} \right) + \nabla p = 0
+\end{equation}
+
+If you wish to reference the equation, you should use LaTeX environment and
+you can reference it via =\ref{label}=, where =label= is the label you set via =\label{}=.
+For example, here is Eq. \ref{eq:euler}.
+
+*Note* that to get this working, the =ams= tag needs to be present
+in your *MathJax* setting, which is typically stored in =math.html=.
+My =math.html= looks like:
+
+#+begin_src html
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<script>
+  MathJax = {
+      tex: {
+          tags: 'ams',
+          displayMath: [['\\[', '\\]'], ['$$', '$$']],  // block
+          inlineMath: [['\\(', '\\)'], ['$', '$']]      // inline
+    }
+  };
+</script>
+#+end_src
+
+To preview compiled LaTeX within Org mode, one can use command =C-x C-l=.

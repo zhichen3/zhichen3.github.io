@@ -31,7 +31,7 @@ It was a very pleasant hiking experience!
 
 {{< figure src="IMG_E9455.JPG" caption="<span class=\"figure-number\">Figure 2: </span>This is Yudian. (Credit: Me)" width="100%" >}}
 
-{{< figure src="DSC02570.JPG" caption="<span class=\"figure-number\">Figure 3: </span>A selfie. (Credit: Yudian)" width="100%" >}}
+{{< figure src="DSC02570.JPG" caption="<span class=\"figure-number\">Figure 3: </span>This is me (Credit: Yudian)" width="100%" >}}
 
 {{< figure src="DSC02615.JPG" caption="<span class=\"figure-number\">Figure 4: </span>A squirrel! (Credit: Yudian)" width="100%" >}}
 
