@@ -1,4 +1,4 @@
-baseurl = "https://zhichen3.github.io/"
+baseURL = "https://zhichen3.github.io/"
 title = "zhi"
 theme = "hugo-theme-console"
 languageCode = "en-us"
