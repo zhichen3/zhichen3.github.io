@@ -6,4 +6,4 @@ draft = false
 weight = 1001
 +++
 
-<embed src="/ox-hugo/cv.pdf" type="application/pdf" width="100%" height="1000px">
+<embed src="/ox-hugo/cv.pdf" type="application/pdf" width="100%" height="800px">

@@ -25,7 +25,7 @@
 
 ongoing.
 
-* DONE Adaptive Nuclear Statistical Equilibrium for Type Ia SN Simulation
+* TODO Adaptive Nuclear Statistical Equilibrium for Type Ia SN Simulation
 :PROPERTIES:
 :EXPORT_FILE_NAME: index
 :EXPORT_HUGO_BUNDLE: nse

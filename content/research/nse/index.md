@@ -3,7 +3,7 @@ title = "Adaptive Nuclear Statistical Equilibrium for Type Ia SN Simulation"
 author = ["zhi"]
 date = 2025-02-20T00:00:00-05:00
 type = "gallery"
-draft = false
+draft = true
 weight = 1003
 image = "enuc_slice.png"
 +++
