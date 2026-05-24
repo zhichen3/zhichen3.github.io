@@ -346,7 +346,7 @@ the website.
 
 i.e.
 
-#+caption: This is Nian Nian
+#+caption: Nian Nian raising her hand (feet)
 #+attr_html: :width 50%
 [[file:/images/nian.jpg]]
 
@@ -435,7 +435,7 @@ and =img1.png= will then be auto-copied to =content/post/post1/img1.png=.
 
 i.e.
 
-#+caption: Nian Nian raising her hand (feet)
+#+caption: This is Nian Nian
 #+attr_html: :width 50%
 [[file:ox-hugo-tutorial/nian1.JPG]]
 

@@ -14,7 +14,7 @@
 
 #+caption: This is Nian Nian.
 #+attr_html: :height 500px
-[[file:nian.jpg]]
+[[file:/images/nian.jpg]]
 
 *Hi* there! I am a graduate student in astrophysics at [[https://www.stonybrook.edu/commcms/grad-physics-astronomy/][Stony Brook University]].
 I work with [[https://zingale.github.io/][Michael Zingale]] on the development of numerical algorithms and their applications

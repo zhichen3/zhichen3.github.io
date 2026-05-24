@@ -225,7 +225,7 @@ the website.
 
 i.e.
 
-{{< figure src="/images/nian.jpg" caption="<span class=\"figure-number\">Figure 3: </span>This is Nian Nian" width="50%" >}}
+{{< figure src="/images/nian.jpg" caption="<span class=\"figure-number\">Figure 3: </span>Nian Nian raising her hand (feet)" width="50%" >}}
 
 This has two major downsides:
 
@@ -312,7 +312,7 @@ and `img1.png` will then be auto-copied to `content/post/post1/img1.png`.
 
 i.e.
 
-{{< figure src="nian1.JPG" caption="<span class=\"figure-number\">Figure 4: </span>Nian Nian raising her hand (feet)" width="50%" >}}
+{{< figure src="nian1.JPG" caption="<span class=\"figure-number\">Figure 4: </span>This is Nian Nian" width="50%" >}}
 
 **Note** that using the prefix `file:` is needed to use local
 link for `DISPLAY_IMG_LINK` for local image files in order
