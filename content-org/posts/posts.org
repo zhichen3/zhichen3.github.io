@@ -15,7 +15,7 @@
 :PROPERTIES:
 :EXPORT_FILE_NAME: index
 :EXPORT_HUGO_BUNDLE: gdb-tutorial
-:EXPORT_DATE: <2026-01-17 Sat>
+:EXPORT_DATE: <2026-04-14 Tue>
 :EXPORT_HUGO_PUBLISHDATE:
 :EXPORT_HUGO_EXPIRYDATE:
 :EXPORT_AUTHOR: zhi
@@ -231,14 +231,7 @@ This is a greate quote by me.
     -- Me
 #+end_quote
 
-You can also create code blocks via
-
-#+begin_src
-  #+begin_src language
-  Some language code
-  #+end_src
-#+end_src
-
+You can also create code blocks.
 For example python, we can do
 
 #+begin_src python

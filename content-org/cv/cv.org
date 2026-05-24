@@ -1,0 +1,17 @@
+#+HUGO_BASE_DIR: ../../
+#+HUGO_SECTION: cv
+* Curriculum Vitae
+:PROPERTIES:
+   :EXPORT_FILE_NAME: index
+   :EXPORT_DATE: <2026-05-22 Fri>
+   :EXPORT_HUGO_PUBLISHDATE:
+   :EXPORT_HUGO_EXPIRYDATE:
+   :EXPORT_AUTHOR: zhi
+   :EXPORT_HUGO_WEIGHT: auto
+   :EXPORT_TAGS:
+   :EXPORT_CATEGORIES:
+   :END:
+
+#+begin_export html
+<embed src="/ox-hugo/cv.pdf" type="application/pdf" width="100%" height="1000px">
+#+end_export

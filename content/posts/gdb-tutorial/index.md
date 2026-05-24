@@ -1,7 +1,7 @@
 +++
 title = "GDB Tutorial"
 author = ["zhi"]
-date = 2026-01-17T00:00:00-05:00
+date = 2026-04-14T00:00:00-04:00
 tags = ["gdb"]
 categories = ["tutorial"]
 type = "posts"

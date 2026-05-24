@@ -13,7 +13,7 @@
    :END:
 
 #+caption: This is Nian Nian.
-#+attr_html: :width 35%
+#+attr_html: :height 500px
 [[file:nian.jpg]]
 
 *Hi* there! I am a graduate student in astrophysics at [[https://www.stonybrook.edu/commcms/grad-physics-astronomy/][Stony Brook University]].

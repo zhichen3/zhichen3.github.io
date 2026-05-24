@@ -44,5 +44,5 @@ languageCode = "en-us"
   url = "research/"
 
   [[params.navlinks]]
-  name = "photos/"
-  url = "photos/"
+  name = "cv/"
+  url = "cv/"

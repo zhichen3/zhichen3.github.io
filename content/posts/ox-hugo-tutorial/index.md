@@ -110,15 +110,7 @@ which looks like
 >
 > -- Me
 
-You can also create code blocks via
-
-```nil
-#+begin_src language
-Some language code
-```
-
-\#+end_src
-
+You can also create code blocks.
 For example python, we can do
 
 ```python
