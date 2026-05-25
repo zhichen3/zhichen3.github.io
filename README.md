@@ -2,7 +2,7 @@
 
 This is auto generated using Hugo.
 
-Usage of different folders :
+Usage of different folders:
 
 - archetypes/: Templates for new content (default front matter).
 - content/: Stores all site content (Markdown files).
