@@ -13,12 +13,14 @@
    :END:
 
 #+caption: This is Nian Nian.
-#+attr_html: :width 70%
+#+attr_html: :width 65%
 [[file:/images/nian.jpg]]
 
 *Hi* there! I am a graduate student in astrophysics at [[https://www.stonybrook.edu/commcms/grad-physics-astronomy/][Stony Brook University]].
 I work with [[https://zingale.github.io/][Michael Zingale]] on the development of numerical algorithms and their applications
 in modeling astrophysical thermonuclear explosion events, such as X-ray bursts.
+
+A list of my publications can be found on [[https://scholar.google.com/citations?user=WpAExNIAAAAJ&hl=en][Google Scholar]].
 
 Beyond academia, I enjoy playing fingerstyle guitar, reading manga,
 working on hands-on projects, and relaxing with my cat, NianNian.

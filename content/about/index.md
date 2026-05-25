@@ -6,11 +6,13 @@ draft = false
 weight = 1001
 +++
 
-{{< figure src="/images/nian.jpg" caption="<span class=\"figure-number\">Figure 1: </span>This is Nian Nian." width="70%" >}}
+{{< figure src="/images/nian.jpg" caption="<span class=\"figure-number\">Figure 1: </span>This is Nian Nian." width="65%" >}}
 
 **Hi** there! I am a graduate student in astrophysics at [Stony Brook University](https://www.stonybrook.edu/commcms/grad-physics-astronomy/).
 I work with [Michael Zingale](https://zingale.github.io/) on the development of numerical algorithms and their applications
 in modeling astrophysical thermonuclear explosion events, such as X-ray bursts.
+
+A list of my publications can be found on [Google Scholar](https://scholar.google.com/citations?user=WpAExNIAAAAJ&hl=en).
 
 Beyond academia, I enjoy playing fingerstyle guitar, reading manga,
 working on hands-on projects, and relaxing with my cat, NianNian.
