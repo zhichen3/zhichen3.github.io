@@ -6,4 +6,10 @@ draft = false
 weight = 1001
 +++
 
+<div class="resource-copy">
+
+</ox-hugo/cv.pdf>
+
+</div>
+
 <embed src="/ox-hugo/cv.pdf" type="application/pdf" width="100%" height="800px">

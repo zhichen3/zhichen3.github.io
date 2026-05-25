@@ -11,6 +11,8 @@
    :EXPORT_TAGS:
    :EXPORT_CATEGORIES:
    :END:
+#+ATTR_HTML: :class resource-copy
+[[file:cv.pdf]]
 
 #+begin_export html
 <embed src="/ox-hugo/cv.pdf" type="application/pdf" width="100%" height="800px">
