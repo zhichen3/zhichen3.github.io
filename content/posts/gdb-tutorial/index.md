@@ -40,7 +40,7 @@ gdb myprogram
 Now inside gdb, set breakpoints to tell GDB where to pause.
 You can either set by line number of function name
 
-```nil
+```text
 (gdb) break main         # Break at the beginning of the main function
 (gdb) break 42           # Break at line 42
 (gdb) break file.cpp:55  # Break at line 55 of a specific file
@@ -49,7 +49,7 @@ You can either set by line number of function name
 Now run the program via `run` command. If the program needs command-line
 arguments, pass them after `run`, i.e. `inputs` in this case.
 
-```nil
+```text
 (gdb) run inputs
 ```
 

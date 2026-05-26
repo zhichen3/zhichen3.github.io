@@ -52,18 +52,18 @@ Now launch GDB with compiled program as the following.
 Now inside gdb, set breakpoints to tell GDB where to pause.
 You can either set by line number of function name
 
-#+begin_src
+#+begin_example
 (gdb) break main         # Break at the beginning of the main function
 (gdb) break 42           # Break at line 42
 (gdb) break file.cpp:55  # Break at line 55 of a specific file
-#+end_src
+#+end_example
 
 Now run the program via =run= command. If the program needs command-line
 arguments, pass them after =run=, i.e. =inputs= in this case.
 
-#+begin_src
+#+begin_example
   (gdb) run inputs
-#+end_src
+#+end_example
 
 The program should stop at your breakpoints, use commands like =print= to
 debug.
@@ -169,7 +169,7 @@ See [[https://ox-hugo.scripter.co/doc/hugo-bundle/][here]] to see how =ox-hugo= 
 My personal workflow is to use branch bundle as /sections/ and leaf bundle for
 specific entries. For example, my typical structure goes like:
 
-#+begin_src
+#+begin_example
   content-org/
   ├── posts/
   │   ├── _index.md
@@ -181,7 +181,7 @@ specific entries. For example, my typical structure goes like:
   │       └── img2.png
   └── about/
       └── _index.md
-#+end_src
+#+end_example
 
 where I use branch bundle, using /_index.md/, to symbolize a section.
 And then use leaf bundles, using /index.md/, for each individual post.
@@ -196,9 +196,9 @@ Different text formatting are available
 A horizontal line can be created for formatting via
 5 consecutive dashes.
 
-#+begin_src
+#+begin_example
   -----
-#+end_src
+#+end_example
 
 which looks like
 
@@ -212,27 +212,55 @@ Then create the definition of footnote separately via
 
 [fn:1] The footnote definition appears at the bottom of the page.
 
-** Quotes and Code
+** Example, Quotes, and Code
+You can create a simple text block via
+
+#+begin_src text
+  #+begin_example
+    This is pure text.
+  #+end_example
+#+end_src
+
 You can create a quote block via
 
-#+begin_src
+#+begin_example
   #+begin_quote
-  This is a greate quote by me.
+  This is a great quote by me.
 
     -- Me
   #+end_quote
-#+end_src
+#+end_example
 
 which looks like
 
 #+begin_quote
-This is a greate quote by me.
+This is a great quote by me.
 
     -- Me
 #+end_quote
 
-You can also create code blocks.
-For example python, we can do
+You can also create code blocks,
+where you specify the language after #+begin_src, i.e.
+
+#+begin_example
+#+begin_src python
+  import numpy as np
+
+  class Cat:
+      def __init__(self, name, numWhiskers, weight):
+          self.name = name
+          self.numWhiskers = numWhiskers
+          self.weight = weight
+
+      def talk(self):
+          print("Meow!")
+
+  myCat = Cat("Nian", 20, 10)
+  myCat.talk()
+#+end_src
+#+end_example
+
+which will render as
 
 #+begin_src python
   import numpy as np
@@ -249,7 +277,6 @@ For example python, we can do
   myCat = Cat("Nian", 20, 10)
   myCat.talk()
 #+end_src
-
 ** Hyperlink and Online Image
 
 See [[https://ox-hugo.scripter.co/doc/image-links/][here]] for more information.
@@ -257,9 +284,9 @@ See [[https://ox-hugo.scripter.co/doc/image-links/][here]] for more information.
 =ox-hugo= converts hyperlinks using the standard
 [[https://orgmode.org/guide/Hyperlinks.html][Org mode hyperlink syntax]]:
 
-#+begin_src
+#+begin_example
   [[LINK][DESCRIPTION]]
-#+end_src
+#+end_example
 
 The =DESCRIPTION= part is optional.
 If it is omitted, the =LINK= itself is displayed on the website.
@@ -272,12 +299,12 @@ For example, here is a hyperlinked text to [[https://www.wikipedia.org/][wikiped
 To display image on the website, we typically want to format it somehow.
 The common syntax are the following:
 
-#+begin_src
+#+begin_example
   #+NAME: IMG_NAME
   #+ATTR_HTML: :width 100%
   #+CAPTION: Here is a caption
   [[IMG_LINK][DISPLAY_IMG_LINK]]
-#+end_src
+#+end_example
 
 =#+NAME= is the name used to reference the image via =[[IMG_NAME]]=.
 =#+ATTR_HTML= sets the attributes for html. See [[https://orgmode.org/worg/org-tutorials/images-and-xhtml-export.html][here]] for more info.
@@ -327,22 +354,22 @@ store them in =static/=, or perhaps create a subdirectory, say =images/=
 and put images there. Suppose the =Hugo= base directory is named as /hugo/,
 then the structure goes like
 
-#+begin_src
+#+begin_example
   hugo/
   ├── other subdirs
   └── static/
       └── images/
           └── img1.png
-#+end_src
+#+end_example
 
 Then the image can be accessed via the following (see [[https://ox-hugo.scripter.co/doc/image-links/#references-to-files-in-the-static-directory][here]] for more information),
 which is to basically access via /absolute path/ after the website is built,
 where it is assumed that the =public/= directory acts as the /root directory/ for
 the website.
 
-#+begin_src
+#+begin_example
   [[/images/img1.png]]
-#+end_src
+#+end_example
 
 i.e.
 
@@ -365,7 +392,7 @@ able to access it via /relative link/.
 
 For example, if the structure goes like:
 
-#+begin_src
+#+begin_example
   hugo/
   ├── other subdirs
   └── content/
@@ -373,19 +400,19 @@ For example, if the structure goes like:
           └── post1/
               └── index.md
               └── img1.png
-#+end_src
+#+end_example
 
 Then we can access it in /index.md/ via
 
-#+begin_src
+#+begin_example
   ![image](img1.png)
-#+end_src
+#+end_example
 
 However, for Org mode users, we typically only want to work with =content-org/=
 directory, and have =ox-hugo= to auto generate everything to =content/=.
 This means that we wish to work with a structure like:
 
-#+begin_src
+#+begin_example
   hugo/
   ├── other subdirs
   ├── content
@@ -394,15 +421,15 @@ This means that we wish to work with a structure like:
           └── post.org
           └── post1/
               └── img1.png
-#+end_src
+#+end_example
 
 where =post.org= holds all possible post entries. Suppose that we have
 a single post named as =post1=, and it uses image =img1.png=. Now we can access
 this image in the Org file using the relative link.
 
-#+begin_src
+#+begin_example
   [[file:post1/img1.png]]
-#+end_src
+#+end_example
 
 However, =Hugo= won't recognize this since =img1.png= does not belong to the same
 directory as /index.md/ which will be auto generated by =ox-hugo=.
@@ -421,17 +448,17 @@ Now if the Org post is /leaf bundle/, i.e. for the Org subtree,
 we set the output file name to be /index.md/ and set the directory where
 the bundle lives, i.e. /post1/.
 
-#+begin_src
+#+begin_example
   :EXPORT_FILE_NAME: index
   :EXPORT_HUGO_BUNDLE: post1
-#+end_src
+#+end_example
 
 Now we can simply reference the image as following,
 and =img1.png= will then be auto-copied to =content/post/post1/img1.png=.
 
-#+begin_src
+#+begin_example
   [[file:post1/img1.png]]
-#+end_src
+#+end_example
 
 i.e.
 
@@ -455,7 +482,7 @@ There are different ways to write math expressions. See [[https://ox-hugo.script
    $$ i\hbar \frac{\partial}{\partial t} \Psi(\mathbf{r}, t) = \hat{H} \Psi(\mathbf{r}, t) $$
 3. Math block via *LaTex*:
 
-   #+begin_src latex
+   #+begin_src tex
      \begin{equation}
        \label{eq:euler} \tag{1}
        \frac{\partial }{\partial t}\left( \rho \vec{U} \right) + \nabla \cdot \left(\rho \vec{U} \otimes \vec{U} \right) + \nabla p = 0

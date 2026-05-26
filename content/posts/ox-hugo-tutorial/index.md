@@ -45,7 +45,7 @@ See [here](https://ox-hugo.scripter.co/doc/hugo-bundle/) to see how `ox-hugo` ex
 My personal workflow is to use branch bundle as _sections_ and leaf bundle for
 specific entries. For example, my typical structure goes like:
 
-```nil
+```text
 content-org/
 ├── posts/
 │   ├── _index.md
@@ -75,7 +75,7 @@ Different text formatting are available
 A horizontal line can be created for formatting via
 5 consecutive dashes.
 
-```nil
+```text
 -----
 ```
 
@@ -92,13 +92,21 @@ Then create the definition of footnote separately via
 `[fn:#] footnote definition`[^fn:1]
 
 
-## Quotes and Code {#quotes-and-code}
+## Example, Quotes, and Code {#example-quotes-and-code}
+
+You can create a simple text block via
+
+```text
+#+begin_example
+  This is pure text.
+#+end_example
+```
 
 You can create a quote block via
 
-```nil
+```text
 #+begin_quote
-This is a greate quote by me.
+This is a great quote by me.
 
   -- Me
 #+end_quote
@@ -106,12 +114,32 @@ This is a greate quote by me.
 
 which looks like
 
-> This is a greate quote by me.
+> This is a great quote by me.
 >
 > -- Me
 
-You can also create code blocks.
-For example python, we can do
+You can also create code blocks,
+where you specify the language after #+begin_src, i.e.
+
+```text
+#+begin_src python
+  import numpy as np
+
+  class Cat:
+      def __init__(self, name, numWhiskers, weight):
+          self.name = name
+          self.numWhiskers = numWhiskers
+          self.weight = weight
+
+      def talk(self):
+          print("Meow!")
+
+  myCat = Cat("Nian", 20, 10)
+  myCat.talk()
+#+end_src
+```
+
+which will render as
 
 ```python
 import numpy as np
@@ -137,7 +165,7 @@ See [here](https://ox-hugo.scripter.co/doc/image-links/) for more information.
 `ox-hugo` converts hyperlinks using the standard
 [Org mode hyperlink syntax](https://orgmode.org/guide/Hyperlinks.html):
 
-```nil
+```text
 [[LINK][DESCRIPTION]]
 ```
 
@@ -152,7 +180,7 @@ For example, here is a hyperlinked text to [wikipedia](https://www.wikipedia.org
 To display image on the website, we typically want to format it somehow.
 The common syntax are the following:
 
-```nil
+```text
 #+NAME: IMG_NAME
 #+ATTR_HTML: :width 100%
 #+CAPTION: Here is a caption
@@ -206,7 +234,7 @@ store them in `static/`, or perhaps create a subdirectory, say `images/`
 and put images there. Suppose the `Hugo` base directory is named as _hugo_,
 then the structure goes like
 
-```nil
+```text
 hugo/
 ├── other subdirs
 └── static/
@@ -219,7 +247,7 @@ which is to basically access via _absolute path_ after the website is built,
 where it is assumed that the `public/` directory acts as the _root directory_ for
 the website.
 
-```nil
+```text
 [[/images/img1.png]]
 ```
 
@@ -242,7 +270,7 @@ able to access it via _relative link_.
 
 For example, if the structure goes like:
 
-```nil
+```text
 hugo/
 ├── other subdirs
 └── content/
@@ -254,7 +282,7 @@ hugo/
 
 Then we can access it in _index.md_ via
 
-```nil
+```text
 ![image](img1.png)
 ```
 
@@ -262,7 +290,7 @@ However, for Org mode users, we typically only want to work with `content-org/`
 directory, and have `ox-hugo` to auto generate everything to `content/`.
 This means that we wish to work with a structure like:
 
-```nil
+```text
 hugo/
 ├── other subdirs
 ├── content
@@ -277,7 +305,7 @@ where `post.org` holds all possible post entries. Suppose that we have
 a single post named as `post1`, and it uses image `img1.png`. Now we can access
 this image in the Org file using the relative link.
 
-```nil
+```text
 [[file:post1/img1.png]]
 ```
 
@@ -298,7 +326,7 @@ Now if the Org post is _leaf bundle_, i.e. for the Org subtree,
 we set the output file name to be _index.md_ and set the directory where
 the bundle lives, i.e. _post1_.
 
-```nil
+```text
 :EXPORT_FILE_NAME: index
 :EXPORT_HUGO_BUNDLE: post1
 ```
@@ -306,7 +334,7 @@ the bundle lives, i.e. _post1_.
 Now we can simply reference the image as following,
 and `img1.png` will then be auto-copied to `content/post/post1/img1.png`.
 
-```nil
+```text
 [[file:post1/img1.png]]
 ```
 
@@ -329,7 +357,7 @@ There are different ways to write math expressions. See [here](https://ox-hugo.s
 2.  **Math block** via `$$ EXPRESSION $$`, e.g.
     \\[ i\hbar \frac{\partial}{\partial t} \Psi(\mathbf{r}, t) = \hat{H} \Psi(\mathbf{r}, t) \\]
 3.  Math block via **LaTex**:
-    ```latex
+    ```tex
     \begin{equation}
       \label{eq:euler} \tag{1}
       \frac{\partial }{\partial t}\left( \rho \vec{U} \right) + \nabla \cdot \left(\rho \vec{U} \otimes \vec{U} \right) + \nabla p = 0
