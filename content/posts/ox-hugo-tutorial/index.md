@@ -6,8 +6,24 @@ tags = ["ox-hugo"]
 categories = ["tutorial"]
 type = "posts"
 draft = false
-weight = 1003
+weight = 1004
 +++
+
+<div class="ox-hugo-toc toc">
+
+<div class="heading">Table of Contents</div>
+
+- [Setup](#setup)
+- [Ordered and Unordered List](#ordered-and-unordered-list)
+- [Typographical Emphasis and Horizontal Line](#typographical-emphasis-and-horizontal-line)
+- [Footnote](#footnote)
+- [Example, Quotes, and Code](#example-quotes-and-code)
+- [Hyperlink and Online Image](#hyperlink-and-online-image)
+- [Local Images and Videos](#local-images-and-videos)
+- [Math Expressions and LaTeX](#math-expressions-and-latex)
+
+</div>
+<!--endtoc-->
 
 [Hugo](https://gohugo.io/) is a static website generator written with GO, providing easily
 capability to convert **markdown** files into a **website**. For those who use
@@ -61,6 +77,21 @@ content-org/
 
 where I use branch bundle, using _\_index.md_, to symbolize a section.
 And then use leaf bundles, using _index.md_, for each individual post.
+
+
+## Ordered and Unordered List {#ordered-and-unordered-list}
+
+Here is an unordered list:
+
+-   Apple
+-   Orange
+-   Pear
+
+Here is an ordered list:
+
+1.  Dog
+2.  Cat
+3.  Rabbit
 
 
 ## Typographical Emphasis and Horizontal Line {#typographical-emphasis-and-horizontal-line}

@@ -6,8 +6,18 @@ tags = ["gdb"]
 categories = ["tutorial"]
 type = "posts"
 draft = false
-weight = 1002
+weight = 1003
 +++
+
+<div class="ox-hugo-toc toc">
+
+<div class="heading">Table of Contents</div>
+
+- [Using GDB](#using-gdb)
+- [Commands](#commands)
+
+</div>
+<!--endtoc-->
 
 [GDB](https://www.sourceware.org/gdb/), the GNU Project debugger, is a useful debugger for many
 languages (C, C++, Fortran, etc). Here I keep a set of useful

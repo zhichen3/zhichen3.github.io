@@ -309,7 +309,9 @@ Your browser does not support the video tag.
 :EXPORT_AUTHOR: zhi
 :EXPORT_HUGO_WEIGHT: auto
 :EXPORT_HUGO_TYPE: gallery
+:EXPORT_OPTIONS: toc:2
 :END:
+
 #+ATTR_HTML: :class resource-copy
 [[file:xrb-sensitivity/network_abar_50ms.png]]
 ** Introduction
@@ -476,6 +478,7 @@ showing temperature, $\bar{A}$, and $\dot{e}_\text{nuc}$, from top to bottom.
 :EXPORT_HUGO_CUSTOM_FRONT_MATTER: :image "interferometry_setup.png"
 :EXPORT_AUTHOR: zhi
 :EXPORT_HUGO_TYPE: gallery
+:EXPORT_OPTIONS: toc:2
 :EXPORT_TAGS:
 :EXPORT_CATEGORIES:
 :END:
@@ -514,7 +517,7 @@ The analysis involves two parts:
 2. Feed the sampled data to MCMC and see if we can recover the original parameters used
    such as visibility and the separation between two sources.
 
-**** Simulating Coincidence
+*** Simulating Coincidence
 
 #+attr_html: :width 75%
 #+caption: Schematic picture the fringe pattern. The blue curve represents a theoretical fringe pattern, and orange points are events detected.
@@ -549,7 +552,7 @@ to CDF. By inverting the CDF, we then obtain the phase, \phi, representing a coi
 After obtaining \phi for each fringe cycle,
 we can just find the corresponding timestamp corresponding to R(t).
 
-**** MCMC Sampling
+*** MCMC Sampling
 
 After simulating our data points following Poisson distribution,
 now we explore the posterior using MCMC procedure. There are 4 parameters to vary,
