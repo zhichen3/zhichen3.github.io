@@ -31,8 +31,8 @@ The actual metadata of the articles that you saved are stored on the
 zotero server for free, and to my knowledge, does **NOT** have a limit.
 **However**, there is a limit on the attachment files stored on the Zotero server,
 i.e. the actual PDFs for the articles. If you're on the free-plan,
-the upper limit quota is 300MB. For 2GB storage, you would need $20 per year,
-and 6GB for $60 per year. See pricing [here](https://www.zotero.org/storage).
+the upper limit quota is 300MB. For 2GB storage, you would need \\$20 per year,
+and 6GB for \\$60 per year. See pricing [here](https://www.zotero.org/storage).
 
 If you want to avoid paying any subscription fees,
 Zotero has an option of using a WebDav server in the setting.
