@@ -119,7 +119,7 @@ With the docker compose file in place, to spin up the container, do
 
 #+begin_src bash
 docker compose up -d
-#+begin_src
+#+end_src
 
 Some notes:
 1. If you want to put zotero storage on a NAS,
@@ -146,7 +146,8 @@ An extremely easy VPN service option is to use [[https://tailscale.com/][tailsca
 Essentially create an account on their website,
 register both the home server hosting different services and your client machines.
 Doing this, all machines registered under the same network in the account
-will see each other as if they're on the same network.
+will see each other as if they're on the same network
+once they have tailscale up and running.
 
 Another popular self-host alternative is [[https://www.wireguard.com/][WireGuard]].
 This requires a little more fiddling to set up, but this offers

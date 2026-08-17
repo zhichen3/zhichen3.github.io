@@ -116,9 +116,9 @@ A good place to organize all different docker containers is in
 `/opt/`, i.e. simply store the above in `/opt/zotero/docker-compose.yml`.
 With the docker compose file in place, to spin up the container, do
 
-\#+begin_src bash
+```bash
 docker compose up -d
-\#+begin_src
+```
 
 Some notes:
 
@@ -148,7 +148,8 @@ An extremely easy VPN service option is to use [tailscale](https://tailscale.com
 Essentially create an account on their website,
 register both the home server hosting different services and your client machines.
 Doing this, all machines registered under the same network in the account
-will see each other as if they're on the same network.
+will see each other as if they're on the same network
+once they have tailscale up and running.
 
 Another popular self-host alternative is [WireGuard](https://www.wireguard.com/).
 This requires a little more fiddling to set up, but this offers
