@@ -120,6 +120,10 @@ With the docker compose file in place, to spin up the container, do
 docker compose up -d
 ```
 
+In Figure [1](#figure--fig:zotero-setting),
+it shows an example where the local machine has local IP of `10.0.0.8`,
+and I used a port of `8765` for the docker container.
+
 Some notes:
 
 1.  If you want to put zotero storage on a NAS,
