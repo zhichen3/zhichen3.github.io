@@ -56,6 +56,7 @@ files over different cloud storage services.
 But you can also host your own webdav server from your local directory
 via command =rclone serve webdav= command.
 
+-----
 ** WebDav server via rclone
 First create a set of username and password that you will be
 using to access the webdav server. Run
@@ -86,6 +87,7 @@ server that does not allow you to upload files from the browser.
 But we can now simple put these information in the Zotero setting,
 and it should detect the server and will create a =/zotero= sub-directory there.
 
+-----
 ** Hosting as Docker Container
 Now it is likely preferred to host the service via [[https://www.docker.com/][docker]] as containers.
 Once you have docker installed and set upon your machine or home server,
@@ -136,6 +138,7 @@ Some notes:
    i.e. =/opt/zotero/= for the case above.
 3. You can choose an arbitrary port to access, under the =ports= section.
 
+-----
 ** Accessing outside of LAN
 For current setup, we can only access the webdav server
 when we're on the same network as the server hosting the
@@ -156,6 +159,8 @@ once they have tailscale up and running.
 Another popular self-host alternative is [[https://www.wireguard.com/][WireGuard]].
 This requires a little more fiddling to set up, but this offers
 more control over different network settings.
+
+-----
 
 * DONE UML Diagram                                            :uml:@tutorial:
 :PROPERTIES:
